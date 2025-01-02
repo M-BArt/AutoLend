@@ -1,0 +1,25 @@
+services:
+  autolend.api:
+    image: ${DOCKER_REGISTRY-}autolendapi
+    build:
+      context: .
+      dockerfile: AutoLend.API/Dockerfile
+    networks: 
+      - mynetwork
+      
+
+  AutoLendDB:
+    image: "mcr.microsoft.com/mssql/server:latest"
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "Papletew0rd"
+      ACCEPT_EULA: "Y"
+    networks:
+      - mynetwork
+    volumes:
+        - mssql
+     
+networks:
+  mynetwork:
+    driver: bridge
