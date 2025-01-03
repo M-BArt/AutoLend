@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoLend.API.Controllers.CustomerController {
-    [Route("")]
+    [Route("Customer")]
     [ApiController]
     public partial class CustomerController : ControllerBase {
         private readonly ILogger<CustomerController> _logger;

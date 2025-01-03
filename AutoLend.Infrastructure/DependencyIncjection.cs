@@ -11,7 +11,7 @@ namespace AutoLend.Infrastructure {
             Configuration.SetConfiguration(configuration);
 
             services.AddScoped<ICarRepository, CarRepository>();
-            services.AddScoped<ICustomerRepository, ClientRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IRentalRepository, RentalRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
 

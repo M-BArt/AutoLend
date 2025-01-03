@@ -1,11 +1,11 @@
-﻿using AutoLend.Domain.DataModels.Client;
+﻿using AutoLend.Domain.DataModels.Customer;
 
 namespace AutoLend.Application.Services.Interfaces {
     public interface ICustomerService {
-        Task Create( Customer customer );
-        Task Delete( Guid customerId );
-        Task Update( Customer customer );
-        Task<IEnumerable<Customer?>> GetAll();
-        Task<Customer?> GetById( Guid id );
+        Task CreateCustomer( Customer customer );
+        Task DeleteCustomer( Guid customerId );
+        Task UpdateCustomer( Customer customer );
+        Task<IEnumerable<Customer?>> GetAllCustomers();
+        Task<Customer?> GetCustomerById( Guid customerId );
     }
 }

@@ -1,1 +1,3 @@
-﻿SELECT * FROM dbo.Customer
+﻿SELECT * 
+FROM dbo.Customer
+WHERE isActive = 1;

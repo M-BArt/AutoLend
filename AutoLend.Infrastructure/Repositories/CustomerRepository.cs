@@ -1,15 +1,15 @@
-﻿using AutoLend.Domain.DataModels.Client;
+﻿using AutoLend.Domain.DataModels.Customer;
 using AutoLend.Domain.Interfaces;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
 namespace AutoLend.Infrastructure.Repositories {
-    internal class ClientRepository : ICustomerRepository {
+    internal class CustomerRepository : ICustomerRepository {
 
         private readonly string _connectionString;
 
-        public ClientRepository( IConfiguration configuration ) {
+        public CustomerRepository( IConfiguration configuration ) {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
 

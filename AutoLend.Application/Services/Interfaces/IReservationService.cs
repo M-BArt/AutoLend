@@ -1,16 +1,11 @@
-﻿using AutoLend.Domain.DataModels.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoLend.Domain.DataModels.Reservation;
 
 namespace AutoLend.Application.Services.Interfaces {
     public interface IReservationService {
-        Task Create( Customer customer );
-        Task Delete( Guid customerId );
-        Task Update( Customer customer );
-        Task<IEnumerable<Customer?>> GetAll();
-        Task<Customer?> GetById( Guid id );
+        Task CreateReservation( Reservation reservation );
+        Task DeleteReservation( int reservationId );
+        Task UpdateReservation( Reservation reservation );
+        Task<IEnumerable<Reservation?>> GetAllReservations();
+        Task<Reservation?> GetReservationById( int reservationId );
     }
 }

@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AutoLend.API.Controllers.CustomerController {
-    public partial class CustomerController {
-
-        [HttpGet()]
-        public async Task<IActionResult> GetAll() {
+namespace AutoLend.API.Controllers {
+    public partial class RentalController {
+        [HttpDelete("{rentalId}")]
+        public async Task<IActionResult> Delete( [FromRoute] int rentalId ) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
             try {
-                return Ok(await _customerService.GetAllCustomers());
+                await _rentalService.DeleteRental(rentalId);
+                return Ok("Rental removed");
             } catch (Exception ex) {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "Internal Error Server");

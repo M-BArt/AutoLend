@@ -1,5 +1,5 @@
 ﻿using AutoLend.Application.Services.Interfaces;
-using AutoLend.Domain.DataModels.Client;
+using AutoLend.Domain.DataModels.Customer;
 using AutoLend.Domain.Interfaces;
 
 namespace AutoLend.Application.Services {
@@ -7,27 +7,27 @@ namespace AutoLend.Application.Services {
 
         private readonly ICustomerRepository _customerRepository;
 
-        public CustomerService( ICustomerRepository clientRepository ) {
-            _customerRepository = clientRepository;
+        public CustomerService( ICustomerRepository customerRepository ) {
+            _customerRepository = customerRepository;
         }
 
-        public async Task<IEnumerable<Customer?>> GetAll() {
+        public async Task<IEnumerable<Customer?>> GetAllCustomers() {
             return await _customerRepository.GetAllAsync();
         }
 
-        public async Task Delete(Guid customerId) {
+        public async Task DeleteCustomer( Guid customerId) {
             await _customerRepository.DeleteAsync(customerId);
         }
 
-        public async Task Create(Customer customer) {
+        public async Task CreateCustomer( Customer customer) {
             await _customerRepository.CreateAsync(customer);
         }
 
-        public async Task Update( Customer customer ) {
+        public async Task UpdateCustomer( Customer customer ) {
             await _customerRepository.UpdateAsync(customer);
         }
 
-        public async Task<Customer?> GetById( Guid customerId ) {
+        public async Task<Customer?> GetCustomerById( Guid customerId ) {
             return await _customerRepository.GetByIdAsync(customerId);
         }
     }

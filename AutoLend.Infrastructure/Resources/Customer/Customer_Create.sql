@@ -14,7 +14,8 @@ INSERT INTO dbo.Customer
 	[Phone], 
 	[Address],
 	[Gender],
-	[DateOfBirth]) 
+	[DateOfBirth],
+	[isActive]) 
 VALUES
 	(
 	NEWID(),
@@ -26,6 +27,7 @@ VALUES
 	@Phone, 
 	@Address,
 	@Gender,
-	@DateOfBirth
+	@DateOfBirth,
+	1
 	)
 END
