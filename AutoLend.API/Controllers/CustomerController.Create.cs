@@ -1,20 +1,20 @@
-﻿using AutoLend.Domain.DataModels.Customer;
+﻿using AutoLend.Domain.DataModels.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
 namespace AutoLend.API.Controllers.CustomerController {
     public partial class CustomerController {
-        [HttpPost()]
+        [HttpPost("customer")]
         public async Task<IActionResult> Create( [FromBody] Customer customer) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             try {
-                await _customerService.CreateCustomer(customer);
-                return Ok("Customer added successfully.");
+                await _customerService.Create(customer);
+                return Ok("User added successfully.");
             } 
             catch (SqlException ex) {
-                if (ex.Message.Contains("Customer already exists in the database")) {
-                    return BadRequest("Customer already exists in the database.");
+                if (ex.Message.Contains("User already exists in the database")) {
+                    return BadRequest("User already exists in the database.");
                 }
                 _logger.LogError(ex, "SQL error occurred: {Message}", ex.Message);
                 return BadRequest(ModelState);

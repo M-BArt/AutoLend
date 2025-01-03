@@ -1,11 +1,11 @@
-﻿using AutoLend.Domain.DataModels.Rental;
+﻿using AutoLend.Domain.DataModels.Client;
 
 namespace AutoLend.Domain.Interfaces {
     public interface IRentalRepository {
-        Task CreateAsync( Rental rental );
+        Task CreateAsync( Rental car );
         Task<IEnumerable<Rental?>> GetAllAsync();
-        Task<Rental?> GetByIdAsync( int rentalId );
-        Task UpdateAsync( Rental rental );
-        Task DeleteAsync( int rentalId );
+        Task<Rental?> GetByIdAsync( Guid carId );
+        Task UpdateAsync( Rental car );
+        Task DeleteAsync( Guid carId );
     }
 }

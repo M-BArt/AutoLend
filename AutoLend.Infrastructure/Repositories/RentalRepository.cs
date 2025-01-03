@@ -1,8 +1,5 @@
-﻿using AutoLend.Domain.DataModels.Customer;
-using AutoLend.Domain.DataModels.Rental;
+﻿using AutoLend.Domain.DataModels.Client;
 using AutoLend.Domain.Interfaces;
-using Dapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
 namespace AutoLend.Infrastructure.Repositories {
@@ -13,41 +10,24 @@ namespace AutoLend.Infrastructure.Repositories {
         public RentalRepository( IConfiguration configuration ) {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
+        public Task CreateAsync( Rental car ) {
+            throw new NotImplementedException();
+        }
 
-        public async Task CreateAsync( Rental rental ) {
-            using (SqlConnection connection = new(_connectionString)) {
-                await connection.OpenAsync();
-                var query = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\AutoLend\\AutoLend.Infrastructure\\Resources\\Rental\\Rental_Create.sql"));
-                await connection.ExecuteAsync(query, rental);
-            }
+        public Task DeleteAsync( Guid carId ) {
+            throw new NotImplementedException();
         }
-        public async Task<IEnumerable<Rental?>> GetAllAsync() {
-            using (SqlConnection connection = new(_connectionString)) {
-                await connection.OpenAsync();
-                var query = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\AutoLend\\AutoLend.Infrastructure\\Resources\\Rental\\Rental_GetAll.sql"));
-                return await connection.QueryAsync<Rental>(query);
-            }
+
+        public Task<IEnumerable<Rental?>> GetAllAsync() {
+            throw new NotImplementedException();
         }
-        public async Task<Rental?> GetByIdAsync( int rentalId ) {
-            using (SqlConnection connection = new(_connectionString)) {
-                await connection.OpenAsync();
-                var query = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\AutoLend\\AutoLend.Infrastructure\\Resources\\Rental\\Rental_GetById.sql"));
-                return await connection.QueryFirstOrDefaultAsync<Rental>(query, new { rentalId });
-            }
+
+        public Task<Rental?> GetByIdAsync( Guid carId ) {
+            throw new NotImplementedException();
         }
-        public async Task UpdateAsync( Rental rental ) {
-            using (SqlConnection connection = new(_connectionString)) {
-                await connection.OpenAsync();
-                var query = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\AutoLend\\AutoLend.Infrastructure\\Resources\\Rental\\Rental_Update.sql"));
-                await connection.ExecuteAsync(query, new { rental });
-            }
-        }
-        public async Task DeleteAsync( int rentalId ) {
-            using (SqlConnection connection = new(_connectionString)) {
-                await connection.OpenAsync();
-                var query = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\AutoLend\\AutoLend.Infrastructure\\Resources\\Rental\\Rental_Delete.sql"));
-                await connection.ExecuteAsync(query, new { rentalId });
-            }
+
+        public Task UpdateAsync( Rental car ) {
+            throw new NotImplementedException();
         }
     }
 }

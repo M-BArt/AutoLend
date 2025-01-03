@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace AutoLend.Domain.DataModels.Customer {
+namespace AutoLend.Domain.DataModels.Client {
     public class Customer {
         public Guid Id { get; set; }
 
@@ -18,15 +18,14 @@ namespace AutoLend.Domain.DataModels.Customer {
         public required string Lastname { get; set; }
 
         [Required(ErrorMessage = "Email name is required")]
-        public required string Email { get; set; }
+        public required string Email { get; set; } 
 
         public string? Phone { get; set; }
 
         public string? Address { get; set; }
 
-        public string? Gender { get; set; }
+        public string?  Gender { get; set; }
 
-        public DateTime? DateOfBirth { get; set; }
-        public bool IsActive { get; set; }
+        public DateTime? DateOfBirth {  get; set; }
     }
 }

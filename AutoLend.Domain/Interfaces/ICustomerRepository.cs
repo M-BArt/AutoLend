@@ -1,4 +1,4 @@
-﻿using AutoLend.Domain.DataModels.Customer;
+﻿using AutoLend.Domain.DataModels.Client;
 
 namespace AutoLend.Domain.Interfaces {
     public interface ICustomerRepository {

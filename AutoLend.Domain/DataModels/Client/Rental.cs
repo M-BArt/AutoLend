@@ -1,10 +1,10 @@
-﻿namespace AutoLend.Domain.DataModels.Rental {
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AutoLend.Domain.DataModels.Client {
     public class Rental {
-        public int RentalId { get; set; }
-        public int CarId { get; set; }
-        public int CustomerId { get; set; }
-        public DateTime RentalDate { get; set; }
-        public DateTime ReturnDate { get; set; }
-        public bool IsActive { get; set; }
     }
 }

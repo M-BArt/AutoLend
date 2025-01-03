@@ -1,11 +1,11 @@
-﻿using AutoLend.Domain.DataModels.Car;
+﻿using AutoLend.Domain.DataModels.Client;
 
 namespace AutoLend.Domain.Interfaces {
     public interface ICarRepository {
         Task CreateAsync(Car car);
         Task<IEnumerable<Car?>> GetAllAsync();
-        Task<Car?> GetByIdAsync( int carId );
+        Task<Car?> GetByIdAsync( Guid carId );
         Task UpdateAsync( Car car );
-        Task DeleteAsync( int carId );
+        Task DeleteAsync( Guid carId );
     }
 }

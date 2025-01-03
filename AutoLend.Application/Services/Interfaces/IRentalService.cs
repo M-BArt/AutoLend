@@ -1,11 +1,16 @@
-﻿using AutoLend.Domain.DataModels.Rental;
+﻿using AutoLend.Domain.DataModels.Client;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AutoLend.Application.Services.Interfaces {
     public interface IRentalService {
-        Task CreateRental( Rental rental );
-        Task DeleteRental( int rentalId );
-        Task UpdateRental( Rental rental );
-        Task<IEnumerable<Rental?>> GetAllRentals();
-        Task<Rental?> GetRentalById( int rentalId );
+        Task Create( Customer customer );
+        Task Delete( Guid customerId );
+        Task Update( Customer customer );
+        Task<IEnumerable<Customer?>> GetAll();
+        Task<Customer?> GetById( Guid id );
     }
 }

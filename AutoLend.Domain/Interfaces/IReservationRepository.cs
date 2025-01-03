@@ -1,11 +1,11 @@
-﻿using AutoLend.Domain.DataModels.Reservation;
+﻿using AutoLend.Domain.DataModels.Client;
 
 namespace AutoLend.Domain.Interfaces {
     public interface IReservationRepository {
-        Task CreateAsync( Reservation reservation );
+        Task CreateAsync( Reservation car );
         Task<IEnumerable<Reservation?>> GetAllAsync();
-        Task<Reservation?> GetByIdAsync( int reservationId );
-        Task UpdateAsync( Reservation reservation );
-        Task DeleteAsync( int reservationId );
+        Task<Reservation?> GetByIdAsync( Guid carId );
+        Task UpdateAsync( Reservation car );
+        Task DeleteAsync( Guid carId );
     }
 }

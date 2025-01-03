@@ -1,1 +1,1 @@
-﻿SELECT * FROM dbo.Reservation WHERE isActive = 1;
+﻿

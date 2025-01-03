@@ -1,4 +1,1 @@
-﻿UPDATE dbo.Customer 
-SET isActive = 0 
-WHERE id = @customerId 
-AND isActive = 1;
+﻿DELETE FROM dbo.Customer WHERE dbo.customer.id = @customerId
