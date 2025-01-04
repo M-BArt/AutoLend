@@ -1,0 +1,1 @@
+﻿SELECT Id, CreateDate, ModifyDate, FirstName, LastName, Email, LicenseNumber, Phone, DateofBirth, HasActiveRental Address FROM dbo.Customers

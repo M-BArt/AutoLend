@@ -1,15 +1,20 @@
-﻿using AutoLend.Application.Services;
-using AutoLend.Application.Services.Interfaces;
+﻿using AutoLend.Core.Services.Car;
+using AutoLend.Core.Services.Customer;
+using AutoLend.Core.Services.Rental;
+using AutoLend.Core.Services.Reservation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AutoLend.Application {
-    public static class DependencyIncjection {
-        public static IServiceCollection AddApplicationServices( this IServiceCollection services ) {
+namespace AutoLend.Core
+{
+    public static class DependencyIncjection
+    {
+        public static IServiceCollection AddCoreServices(this IServiceCollection services)
+        {
 
             services.AddScoped<ICustomerService, CustomerService>();
-            //services.AddScoped<ICarService, CarService>();
-            //services.AddScoped<IRentalService, RentalService>();
-            //services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IRentalService, RentalService>();
+            services.AddScoped<IReservationService, ReservationService>();
 
             return services;
         }

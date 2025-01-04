@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLend.Application", "AutoLend.Application\AutoLend.Application.csproj", "{97E940EA-CCB0-4981-8DF0-4E8AF14866FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoLend.Core", "AutoLend.Application\AutoLend.Core.csproj", "{97E940EA-CCB0-4981-8DF0-4E8AF14866FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLend.Domain", "AutoLend.Domain\AutoLend.Domain.csproj", "{9F9A9C11-23BF-4B2D-B62D-C5B2C1ED7BE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoLend.Data", "AutoLend.Domain\AutoLend.Data.csproj", "{9F9A9C11-23BF-4B2D-B62D-C5B2C1ED7BE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLend.Infrastructure", "AutoLend.Infrastructure\AutoLend.Infrastructure.csproj", "{D6C2BC61-F428-4120-A753-E154B87A22E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoLend.API", "AutoLend.API\AutoLend.API.csproj", "{FFD491EF-C857-4655-8C24-D04BF1AF845D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLend.API", "AutoLend.API\AutoLend.API.csproj", "{FFD491EF-C857-4655-8C24-D04BF1AF845D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{CBC6C588-283A-4F6F-A778-C100D48DE93B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{CBC6C588-283A-4F6F-A778-C100D48DE93B}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0E853556-19D7-4599-A256-2857132CC322}"
 EndProject
@@ -29,10 +27,6 @@ Global
 		{9F9A9C11-23BF-4B2D-B62D-C5B2C1ED7BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F9A9C11-23BF-4B2D-B62D-C5B2C1ED7BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F9A9C11-23BF-4B2D-B62D-C5B2C1ED7BE4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6C2BC61-F428-4120-A753-E154B87A22E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6C2BC61-F428-4120-A753-E154B87A22E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6C2BC61-F428-4120-A753-E154B87A22E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6C2BC61-F428-4120-A753-E154B87A22E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFD491EF-C857-4655-8C24-D04BF1AF845D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFD491EF-C857-4655-8C24-D04BF1AF845D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFD491EF-C857-4655-8C24-D04BF1AF845D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AABCC575-C9A4-42CD-B290-531354FFDC73}
 	EndGlobalSection
 EndGlobal

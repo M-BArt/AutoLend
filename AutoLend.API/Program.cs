@@ -1,7 +1,8 @@
-using AutoLend.Application;
-using AutoLend.Infrastructure;
+using AutoLend.Core;
+using AutoLend.Data;
 
-namespace AutoLend.API {
+namespace AutoLend.API
+{
     public class Program {
         public static void Main( string[] args ) {
             var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,10 @@ namespace AutoLend.API {
             });
 
 
-            builder.Services.AddInfrastructureServices(builder.Configuration).AddApplicationServices();
+            builder.Services
+                .AddDataServices(builder.Configuration)
+                .AddCoreServices();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment()) {
