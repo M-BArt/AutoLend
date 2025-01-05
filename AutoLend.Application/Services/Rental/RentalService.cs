@@ -1,4 +1,7 @@
-﻿using AutoLend.Data.Repositories.Rental;
+﻿using AutoLend.Core.ApiModels.Rental;
+using AutoLend.Data.CoreModels.Rental;
+using AutoLend.Data.Repositories.Car;
+using AutoLend.Data.Repositories.Rental;
 
 namespace AutoLend.Core.Services.Rental
 {
@@ -6,14 +9,31 @@ namespace AutoLend.Core.Services.Rental
     {
 
         private readonly IRentalRepository _rentalRepository;
+        private ICarRepository _carRepository;
 
-        public RentalService(IRentalRepository rentalRepository)
+        public RentalService(IRentalRepository rentalRepository, ICarRepository carRepository)
         {
             _rentalRepository = rentalRepository;
+            _carRepository = carRepository;
         }
-        public async Task CreateRental(Data.DataModels.Rental.Rental rental)
+        public async Task CreateRental( RentalCreateRequest rental )
         {
-            await _rentalRepository.CreateAsync(rental);
+
+            if ((rental.ReturnDate - rental.RentalDate).Days > 7) throw new Exception("Rental period too long"); 
+            
+            var car = await _carRepository.GetByLicensePlateAsync(rental.LicensePlate) ?? throw new Exception("No found car with the given license plates");
+            
+            var TotalCost = ((rental.ReturnDate - rental.RentalDate).Days) * car.Cost;
+            
+            RentalCreateDTO rentalDto = new() {
+                LicensePlate = rental.LicensePlate,
+                LicenseNumber = rental.LicenseNumber,
+                RentalDate = rental.RentalDate,
+                ReturnDate = rental.ReturnDate,
+                TotalCost = TotalCost
+            };
+
+            await _rentalRepository.CreateAsync(rentalDto);
         }
 
         public async Task DeleteRental(int rentalId)
@@ -31,9 +51,13 @@ namespace AutoLend.Core.Services.Rental
             return await _rentalRepository.GetAllAsync();
         }
 
-        public async Task UpdateRental(Data.DataModels.Rental.Rental rental)
+        public async Task UpdateRental(RentalUpdateRequest rental )
         {
-            await _rentalRepository.UpdateAsync(rental);
+            //RentalUpdateDTO rentalDto = new() {
+
+            //};
+
+            //await _rentalRepository.UpdateAsync(rentalDto);
         }
     }
 }

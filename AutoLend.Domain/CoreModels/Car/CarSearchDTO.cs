@@ -8,6 +8,10 @@ namespace AutoLend.Data.CoreModels.Car {
         public DateTime? YearFrom { get; set; }
         public DateTime? YearTo { get; set; }
         public bool? IsAvailable { get; set; }
+        public int? Page { get; set; }
+        public int? PageSize { get; set; }
+        public string? OrderBy { get; set; }
+        public int? OrderDir { get; set; }
     }
 
 

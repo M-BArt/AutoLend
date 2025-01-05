@@ -20,7 +20,6 @@ namespace AutoLend.API
                     });
             });
 
-
             builder.Services
                 .AddDataServices(builder.Configuration)
                 .AddCoreServices();

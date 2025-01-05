@@ -1,4 +1,5 @@
-﻿using AutoLend.Data.DataModels.Rental;
+﻿using AutoLend.Core.ApiModels.Rental;
+using AutoLend.Data.DataModels.Rental;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoLend.API.Controllers
@@ -6,7 +7,7 @@ namespace AutoLend.API.Controllers
     public partial class RentalController
     {
         [HttpPost()]
-        public async Task<IActionResult> Create([FromBody] Rental rental)
+        public async Task<IActionResult> Create([FromBody] RentalCreateRequest rental)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

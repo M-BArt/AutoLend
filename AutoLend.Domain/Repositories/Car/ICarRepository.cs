@@ -8,7 +8,8 @@ namespace AutoLend.Data.Repositories.Car {
         Task<DataModels.Car.Car?> GetByIdAsync( int carId );
         Task UpdateAsync( CarUpdateDTO car );
         Task DeleteAsync( int carId );
-
         Task<IEnumerable<CarSearch?>> SearchAsync( CarSearchDTO car );
+
+        Task<CarGetByLicensePlate?> GetByLicensePlateAsync( string licensePlate );
     }
 }

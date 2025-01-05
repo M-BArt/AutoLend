@@ -130,6 +130,9 @@
   <data name="Car_GetById" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Car_GetById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Car_GetByLicensePlate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Car_GetByLicensePlate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Car_Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Car_Search.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

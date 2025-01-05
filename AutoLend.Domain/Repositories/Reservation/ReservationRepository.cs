@@ -48,12 +48,13 @@ namespace AutoLend.Data.Repositories.Reservation {
                 await connection.OpenAsync();
 
                 var parameters = new {
-                    reservation.FirstName,
-                    reservation.LastName,
+                    reservation.Id,
+                    reservation.ReservationFrom,
+                    reservation.ReservationTo,
                     reservation.Description,
                 };
                 
-                await connection.ExecuteAsync(Sql.Reservation_Update, new { parameters });
+                await connection.ExecuteAsync(Sql.Reservation_Update, parameters);
             }
         }
         public async Task DeleteAsync( int reservationId ) {

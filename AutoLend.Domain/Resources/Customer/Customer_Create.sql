@@ -1,4 +1,4 @@
-﻿IF EXISTS (SELECT 1 FROM dbo.Customers WHERE Email = @Email)
+﻿IF EXISTS (SELECT 1 FROM dbo.Customers WHERE Email = @Email AND dbo.Customers.IsActive = 1)
 BEGIN RAISERROR ('Customer already exists in the database.',16, 1) END
 ELSE
 

@@ -52,6 +52,10 @@ namespace AutoLend.Core.Services.Car {
                 YearFrom = car.YearFrom,
                 YearTo = car.YearTo,
                 IsAvailable = car.IsAvailable,
+                Page = car.Page,
+                PageSize = car.PageSize,
+                OrderBy = car.OrderBy,
+                OrderDir = car.OrderDir
             };
 
             return await _carRepository.SearchAsync(CarDto);

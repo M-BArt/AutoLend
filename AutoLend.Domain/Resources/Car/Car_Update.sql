@@ -8,12 +8,16 @@ BEGIN
     RAISERROR ('Model not found.', 16, 1);
 END
 
-UPDATE Cars
+UPDATE CA
 	SET 
-	Cars.year = COALESCE(NULLIF(@Year, ''), Cars.year), 
-	Cars.ModelId = COALESCE((SELECT id FROM dbo.Models WHERE Models.ModelName LIKE '%' + NULLIF(@ModelName, '') + '%'), Cars.ModelId),
-	Cars.LicensePlate = COALESCE(NULLIF(@LicensePlate, ''), Cars.LicensePlate),
-	Cars.IsAvailable = COALESCE(@IsAvailable, Cars.IsAvailable)
-	FROM dbo.Cars as Cars 
-	INNER JOIN dbo.Models ON Cars.ModelId = dbo.Models.id
-	WHERE Cars.Id = 1 AND IsActive = 1;
+		CA.year			= COALESCE(NULLIF(@Year, ''), CA.year), 
+		CA.ModelId		= COALESCE((SELECT id FROM dbo.Models WHERE Models.ModelName LIKE '%' + NULLIF(@ModelName, '') + '%'), CA.ModelId),
+		CA.LicensePlate	= COALESCE(NULLIF(@LicensePlate, ''), CA.LicensePlate),
+		CA.IsAvailable	= COALESCE(@IsAvailable, CA.IsAvailable)
+	
+	FROM dbo.Cars				AS CA 
+		INNER JOIN dbo.Models	AS M	ON C.ModelId = M.id
+	
+	WHERE 
+			CA.Id = 1 
+		AND IsActive = 1;

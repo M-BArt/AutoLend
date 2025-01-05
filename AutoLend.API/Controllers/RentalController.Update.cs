@@ -12,7 +12,7 @@ namespace AutoLend.API.Controllers
                 return BadRequest(ModelState);
             try
             {
-                await _rentalService.UpdateRental(rental);
+                //await _rentalService.UpdateRental(rental);
                 return Ok("Rental updated");
             }
             catch (Exception ex)

@@ -61,7 +61,42 @@ namespace AutoLend.Data.Resources.Rental {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu .
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu DECLARE @CustomerId CHAR(36) = (
+        ///	SELECT 
+        ///		dbo.Customers.Id 
+        ///	FROM 
+        ///		dbo.Customers 
+        ///	WHERE 
+        ///			LicenseNumber = @LicenseNumber
+        ///		AND IsActive = 1
+        ///	)
+        ///
+        ///DECLARE @CarId INT = (
+        ///	SELECT 
+        ///		dbo.Cars .Id 
+        ///	FROM 
+        ///		dbo.Cars 
+        ///	WHERE 
+        ///		LicensePlate = @LicensePlate
+        ///	AND IsActive = 1
+        ///	)
+        ///
+        ///DECLARE @StatusId INT = (
+        ///	SELECT 
+        ///		Id 
+        ///	FROM 
+        ///		dbo.Status 
+        ///	WHERE 
+        ///			StatusName = &apos;Confirmed&apos;
+        /// 		AND IsActive = 1
+        ///	)
+        ///
+        ///BEGIN
+        ///INSERT INTO dbo.Rental
+        ///	(
+        ///	[CreateDate],
+        ///    [ModifyDate],
+        ///    [CarId] [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Rental_Create {
             get {
@@ -81,9 +116,29 @@ namespace AutoLend.Data.Resources.Rental {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT * 
-        ///FROM dbo.Rental
-        ///WHERE isActive = 1;.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT
+        ///	RE.Id,
+        ///	RE.CreateDate,
+        ///	RE.ModifyDate,
+        ///	CA.LicensePlate,
+        ///	M.ModelName,
+        ///	B.BrandName,
+        ///	CU.FirstName,
+        ///	CU.LastName,
+        ///	CU.LicenseNumber,
+        ///	RE.RentalDate,
+        ///	RE.ReturnDate,
+        ///	S.StatusName,
+        ///	RE.TotalCost
+        ///
+        ///FROM dbo.Rental					AS RE
+        ///	INNER JOIN dbo.Cars			AS CA	ON RE.CarId = CA.Id
+        ///	INNER JOIN dbo.Customers	AS CU	ON RE.CustomerId = CU.Id
+        ///	INNER JOIN dbo.Models		AS M	ON CA.ModelId = M.Id
+        ///	INNER JOIN dbo.Brands		AS B	ON M.BrandId = B.Id
+        ///	INNER JOIN dbo.Status		AS S	ON RE.StatusId = S.Id
+        ///
+        ///WHER [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Rental_GetAll {
             get {
@@ -92,10 +147,29 @@ namespace AutoLend.Data.Resources.Rental {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT DISTINCT * 
-        ///FROM dbo.Rental AS rental 
-        ///WHERE rental.id = @rentalId
-        ///AND isActive = 1;.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
+        ///(EXISTS (SELECT 1 FROM dbo.Rental WHERE Id = @rentalId AND IsActive = 0)) 
+        ///OR (NOT EXISTS (SELECT 1 FROM dbo.Rental WHERE Id = @rentalId AND IsActive = 1)) 
+        ///BEGIN RAISERROR (&apos;Rental not found or is not active.&apos;,16, 1) END
+        ///ELSE
+        ///
+        ///SELECT
+        ///	RE.Id,
+        ///	RE.CreateDate,
+        ///	RE.ModifyDate,
+        ///	CA.LicensePlate,
+        ///	M.ModelName,
+        ///	B.BrandName,
+        ///	CU.FirstName,
+        ///	CU.LastName,
+        ///	CU.LicenseNumber,
+        ///	RE.RentalDate,
+        ///	RE.ReturnDate,
+        ///	S.StatusName,
+        ///	RE.TotalCost
+        ///
+        ///FROM dbo.Rental					AS RE
+        ///	INNER JOIN dbo.Cars			AS CA	 [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Rental_GetById {
             get {

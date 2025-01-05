@@ -1,4 +1,5 @@
-﻿using AutoLend.Data.Resources.Rental;
+﻿using AutoLend.Data.CoreModels.Rental;
+using AutoLend.Data.Resources.Rental;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -12,10 +13,19 @@ namespace AutoLend.Data.Repositories.Rental {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
 
-        public async Task CreateAsync( DataModels.Rental.Rental rental ) {
+        public async Task CreateAsync( RentalCreateDTO rental ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
-                await connection.ExecuteAsync(Sql.Rental_Create, rental);
+
+                var parameters = new {
+                    rental.LicensePlate,
+                    rental.LicenseNumber,
+                    rental.RentalDate,
+                    rental.ReturnDate,
+                    rental.TotalCost
+                };
+
+                await connection.ExecuteAsync(Sql.Rental_Create, parameters);
             }
         }
         public async Task<IEnumerable<DataModels.Rental.Rental?>> GetAllAsync() {

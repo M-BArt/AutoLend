@@ -62,28 +62,34 @@ namespace AutoLend.Data.Resources.Car {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu DECLARE @ModelId INT;
-        ///SELECT @ModelId = Id FROM dbo.Models WHERE ModelName LIKE &apos;%&apos; + @ModelName + &apos;%&apos;;
+        ///
+        ///SELECT 
+        ///    @ModelId = Id 
+        ///FROM 
+        ///    dbo.Models 
+        ///WHERE 
+        ///    ModelName LIKE &apos;%&apos; + @ModelName + &apos;%&apos;;
         ///
         ///IF @ModelId IS NULL
-        ///BEGIN
-        ///    RAISERROR (&apos;Model not found.&apos;, 16, 1);
-        ///END
+        ///    BEGIN
+        ///        RAISERROR (&apos;Model not found.&apos;, 16, 1);
+        ///    END
         ///ELSE
-        ///BEGIN
-        ///INSERT INTO [dbo].[Cars] (
-        ///[ModelId],
-        ///[Year],
-        ///[LicensePlate],
-        ///[IsAvailable],
-        ///[IsActive]
-        ///) VALUES (
-        ///
-        ///@ModelId,
-        ///@Year,
-        ///@LicensePlate,
-        ///@IsAvailable,
-        ///1
-        ///)
+        ///    BEGIN
+        ///    INSERT INTO [dbo].[Cars] (
+        ///        [ModelId],
+        ///        [Year],
+        ///        [LicensePlate],
+        ///        [IsAvailable],
+        ///        [IsActive]
+        ///    ) 
+        ///    VALUES (
+        ///        @ModelId,
+        ///        @Year,
+        ///        @LicensePlate,
+        ///        @IsAvailable,
+        ///        1
+        ///    )
         ///END.
         /// </summary>
         public static string Car_Create {
@@ -94,14 +100,20 @@ namespace AutoLend.Data.Resources.Car {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
-        ///(EXISTS (SELECT 1 FROM dbo.Cars WHERE Id = @CarId AND IsActive = 0)) OR (NOT EXISTS (SELECT 1 FROM dbo.Cars WHERE Id = @CarId)) 
+        ///(EXISTS (SELECT 1 FROM dbo.Cars WHERE Id = @CarId AND IsActive = 0)) 
+        ///OR (NOT EXISTS (SELECT 1 FROM dbo.Cars WHERE Id = @CarId AND dbo.Cars.IsActive = 1)) 
         ///BEGIN RAISERROR (&apos;Car not found.&apos;,16, 1) END
         ///ELSE
         ///
         ///
-        ///UPDATE dbo.Cars 
-        ///SET IsActive = 0 
-        ///WHERE dbo.Cars.Id = @carId AND IsActive = 1;.
+        ///UPDATE CA
+        ///SET 
+        ///	IsActive = 0 
+        ///FROM 
+        ///	dbo.Cars AS CA
+        ///WHERE 
+        ///	CA.Id = @carId 
+        ///AND IsActive = 1;.
         /// </summary>
         public static string Car_Delete {
             get {
@@ -111,11 +123,21 @@ namespace AutoLend.Data.Resources.Car {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT 
-        ///	Cars.Id, Brands.BrandName, Models.ModelName, Cars.Year, Cars.LicensePlate, Cars.IsAvailable
-        ///FROM dbo.Cars as Cars 
-        ///INNER JOIN dbo.Models ON Cars.ModelId = dbo.Models.Id
-        ///INNER JOIN dbo.Brands ON Models.BrandId = dbo.Brands.Id
-        ///WHERE IsActive = 1;.
+        ///	CA.Id, 
+        ///	B.BrandName, 
+        ///	M.ModelName, 
+        ///	CA.Year, 
+        ///	CA.LicensePlate, 
+        ///	CA.IsAvailable
+        ///
+        ///FROM dbo.Cars				AS CA
+        ///	INNER JOIN dbo.Models	AS M  ON CA.ModelId = M.Id
+        ///	INNER JOIN dbo.Brands	AS B  ON M.BrandId = B.Id
+        ///
+        ///WHERE 
+        ///		CA.IsActive = 1
+        ///	AND	B.IsActive = 1
+        ///	AND	M.IsActive = 1;.
         /// </summary>
         public static string Car_GetAll {
             get {
@@ -125,16 +147,27 @@ namespace AutoLend.Data.Resources.Car {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
-        ///(EXISTS (SELECT 1 FROM dbo.Cars WHERE Id = @CarId AND IsActive = 0)) OR (NOT EXISTS (SELECT 1 FROM dbo.Cars WHERE Id = @CarId)) 
+        ///(EXISTS (SELECT 1 FROM dbo.Cars WHERE Id = @CarId AND IsActive = 0)) 
+        ///OR (NOT EXISTS (SELECT 1 FROM dbo.Cars WHERE Id = @CarId)) 
         ///BEGIN RAISERROR (&apos;Car not found.&apos;,16, 1) END
         ///ELSE
         ///
         ///SELECT 
-        ///	Cars.Id, Brands.BrandName, Models.ModelName, Cars.Year, Cars.LicensePlate, Cars.IsAvailable
-        ///FROM dbo.Cars as Cars 
-        ///INNER JOIN dbo.Models ON Cars.ModelId = dbo.Models.Id
-        ///INNER JOIN dbo.Brands ON Models.BrandId = dbo.Brands.Id
-        ///WHERE Cars.id = @carId AND IsActive = 1;
+        ///	CA.Id, 
+        ///	B.BrandName, 
+        ///	M.ModelName, 
+        ///	CA.Year, 
+        ///	CA.LicensePlate, 
+        ///	CA.IsAvailable
+        ///
+        ///FROM dbo.Cars				AS CA 
+        ///	INNER JOIN dbo.Models	AS M  ON CA.ModelId = M.Id
+        ///	INNER JOIN dbo.Brands	AS B  ON M.BrandId = B.Id
+        ///
+        ///WHERE 
+        ///		CA.Id = @carId 
+        ///	AND CA.IsActive = 1
+        ///	AND M.IsActive = 1;
         ///.
         /// </summary>
         public static string Car_GetById {
@@ -144,17 +177,45 @@ namespace AutoLend.Data.Resources.Car {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT ModelName, BrandName, Year, LicensePlate, IsAvailable 
-        ///FROM dbo.Cars 
-        ///INNER JOIN dbo.Models ON dbo.Cars.ModelId = dbo.Models.Id
-        ///INNER JOIN dbo.Brands ON dbo.Models.BrandId = dbo.Brands.Id
-        ///WHERE IsActive = 1
-        ///  AND (@ModelName IS NULL OR ModelName LIKE @ModelName + &apos;%&apos;)
-        ///  AND (@BrandName IS NULL OR BrandName LIKE @BrandName + &apos;%&apos;)
-        ///  AND (
-        ///        (@YearFrom IS NULL AND @YearTo IS NULL)
-        ///        OR (@YearFrom IS NOT NULL AND @YearTo IS NULL AND Year &gt;= @YearFrom)
-        ///        OR (@YearFrom IS NULL A [obcięto pozostałą część ciągu]&quot;;.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT
+        ///	[CA].Id,
+        ///	[CA].[LicensePlate],
+        ///	[CA].[Cost]
+        ///FROM
+        ///	[dbo].[Cars] AS CA
+        ///WHERE
+        ///	[CA].[LicensePlate] = @LicensePlate
+        ///AND	[CA].[IsActive] = 1.
+        /// </summary>
+        public static string Car_GetByLicensePlate {
+            get {
+                return ResourceManager.GetString("Car_GetByLicensePlate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SET
+        ///    @Page = ISNULL(@Page, 1)
+        ///SET
+        ///    @PageSize = ISNULL(@PageSize, 10)
+        ///SET
+        ///    @OrderDir = ISNULL(@OrderDir, 1)
+        ///SET
+        ///    @OrderBy = ISNULL(@OrderBy, &apos;Name&apos;) DECLARE @OrderDesc VARCHAR(10) = CASE
+        ///        WHEN @OrderDir &lt; 0 THEN &apos;DESC&apos;
+        ///        WHEN @OrderDir &gt;= 0 THEN &apos;ASC&apos;
+        ///    END DECLARE @SortExpression VARCHAR(300) = CONCAT(@OrderBy, &apos; &apos;, @OrderDesc);
+        ///
+        ///
+        ///DECLARE @ModelData TABLE (
+        ///    ModelId INT
+        ///);
+        ///
+        ///INSERT INTO @ModelData (ModelId)
+        ///SELECT ModelId
+        ///FROM OPENJSON(@json)
+        ///WITH (
+        ///    Mode [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         public static string Car_Search {
             get {
@@ -173,10 +234,10 @@ namespace AutoLend.Data.Resources.Car {
         ///    RAISERROR (&apos;Model not found.&apos;, 16, 1);
         ///END
         ///
-        ///UPDATE Cars
+        ///UPDATE CA
         ///	SET 
-        ///	Cars.year = COALESCE(NULLIF(@Year, &apos;&apos;), Cars.year), 
-        ///	Cars.ModelId = COALESCE((SELECT id FROM dbo.Models WHERE Models.ModelName LIKE &apos;%&apos; + NULLIF(@ModelName, &apos;&apos;) + [obcięto pozostałą część ciągu]&quot;;.
+        ///		CA.year			= COALESCE(NULLIF(@Year, &apos;&apos;), CA.year), 
+        ///		CA.ModelId		= COALESCE((SELECT id FROM dbo.Models WHERE Models.ModelName LIKE &apos;%&apos; + NULLIF(@ModelName, &apos;&apos;) + &apos;% [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         public static string Car_Update {
             get {

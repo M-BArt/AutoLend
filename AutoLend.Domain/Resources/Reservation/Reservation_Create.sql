@@ -1,10 +1,39 @@
-﻿DECLARE @CustomerId CHAR(36) = (SELECT dbo.Customers.Id FROM dbo.Customers WHERE FirstName = @FirstName AND LastName = @LastName AND Email = @Email)
-DECLARE @CarId INT = (SELECT Id FROM dbo.Cars WHERE LicensePlate = @LicensePlate)
-DECLARE @StatusId  INT = (SELECT Id FROM dbo.ReservationStatus WHERE StatusName = 'Confirmed')
+﻿DECLARE @CustomerId CHAR(36) = (
+	SELECT 
+		dbo.Customers.Id 
+	FROM 
+		dbo.Customers 
+	WHERE 
+			FirstName = @FirstName 
+		AND LastName = @LastName 
+		AND Email = @Email
+		AND IsActive = 1
+	)
 
+DECLARE @CarId INT = (
+	SELECT 
+		Id 
+	FROM 
+		dbo.Cars 
+	WHERE 
+		LicensePlate = @LicensePlate
+	AND IsActive = 1
+	)
 
-IF @CustomerId IS NULL BEGIN RAISERROR ('Customer not found or is not active.',16, 1) END
-If @CarId IS NULL BEGIN RAISERROR ('Car not found or is not active.',16, 1) END
+DECLARE @StatusId INT = (
+	SELECT 
+		Id 
+	FROM 
+		dbo.Status 
+	WHERE 
+			StatusName = 'Confirmed'
+ 		AND IsActive = 1
+	)
+
+IF @CustomerId IS NULL 
+	BEGIN RAISERROR ('Customer not found or is not active.',16, 1) END
+If @CarId IS NULL 
+	BEGIN RAISERROR ('Car not found or is not active.',16, 1) END
 
 INSERT INTO dbo.Reservations ( 
 	[CreateDate],
@@ -27,3 +56,4 @@ VALUES (
 	@CustomerId,
 	1
 )
+

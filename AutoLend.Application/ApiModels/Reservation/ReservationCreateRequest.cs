@@ -10,6 +10,7 @@ namespace AutoLend.Core.ApiModels.Reservation {
         [Required(ErrorMessage = "Last name is required.")]
         public required string LastName { get; set; }
         [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid Email address")]
         public required string Email { get; set; }
         [Required(ErrorMessage = "License plate  is required.")]
         public required string LicensePlate { get; set; }

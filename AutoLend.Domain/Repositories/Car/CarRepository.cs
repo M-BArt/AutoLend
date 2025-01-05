@@ -79,5 +79,12 @@ namespace AutoLend.Data.Repositories.Car.Car {
                 return await connection.QueryAsync<CarSearch>(Sql.Car_Search, parameters);
             }
         }
+
+        public async Task<CarGetByLicensePlate?> GetByLicensePlateAsync(string LicensePlate ) {
+            using (SqlConnection connection = new(_connectionString)) {
+                await connection.OpenAsync();
+                return await connection.QueryFirstOrDefaultAsync<CarGetByLicensePlate>(Sql.Car_GetByLicensePlate, new {LicensePlate});
+            }
+        }
     }
 }

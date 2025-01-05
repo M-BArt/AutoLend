@@ -47,8 +47,8 @@ namespace AutoLend.Core.Services.Reservation
             
             ReservationUpdateDTO ReservationDto = new() {
                 Id = reservationId,
-                FirstName = reservation.FirstName,
-                LastName = reservation.LastName,
+                ReservationFrom = reservation.ReservationFrom,
+                ReservationTo = reservation.ReservationTo,
                 Description = reservation.Description,
             };
 
