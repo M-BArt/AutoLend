@@ -1,4 +1,5 @@
-﻿using AutoLend.Data.Resources.Reservation;
+﻿using AutoLend.Data.CoreModels.Reservation;
+using AutoLend.Data.Resources.Reservation;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -13,10 +14,21 @@ namespace AutoLend.Data.Repositories.Reservation {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
 
-        public async Task CreateAsync( DataModels.Reservation.Reservation reservation ) {
+        public async Task CreateAsync( ReservationCreateDTO reservation ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
-                await connection.ExecuteAsync(Sql.Reservation_Create, reservation);
+
+                var parameters = new { 
+                    reservation.ReservationFrom,
+                    reservation.ReservationTo,
+                    reservation.Description,
+                    reservation.FirstName,
+                    reservation.LastName,
+                    reservation.Email,
+                    reservation.LicensePlate,
+                };
+
+                await connection.ExecuteAsync(Sql.Reservation_Create, parameters);
             }
         }
         public async Task<IEnumerable<DataModels.Reservation.Reservation?>> GetAllAsync() {
@@ -31,10 +43,17 @@ namespace AutoLend.Data.Repositories.Reservation {
                 return await connection.QueryFirstOrDefaultAsync<DataModels.Reservation.Reservation>(Sql.Reservation_GetById, new { reservationId });
             }
         }
-        public async Task UpdateAsync( DataModels.Reservation.Reservation reservation ) {
+        public async Task UpdateAsync( ReservationUpdateDTO reservation ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
-                await connection.ExecuteAsync(Sql.Reservation_Update, new { reservation });
+
+                var parameters = new {
+                    reservation.FirstName,
+                    reservation.LastName,
+                    reservation.Description,
+                };
+                
+                await connection.ExecuteAsync(Sql.Reservation_Update, new { parameters });
             }
         }
         public async Task DeleteAsync( int reservationId ) {

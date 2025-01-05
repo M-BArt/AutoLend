@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace AutoLend.API.Controllers
 {
@@ -9,13 +10,16 @@ namespace AutoLend.API.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            try
-            {
+            try {
                 await _reservationService.DeleteReservation(reservationId);
                 return Ok("Reservation removed");
-            }
-            catch (Exception ex)
-            {
+            } catch (SqlException ex) {
+                if (ex.Message.Contains("Reservation not found or is not active.")) {
+                    return BadRequest("Reservation not found or is not active.");
+                }
+                _logger.LogError(ex, "SQL error occurred: {Message}", ex.Message);
+                return BadRequest(ModelState);
+            } catch (Exception ex) {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "Internal Error Server");
             }

@@ -61,7 +61,15 @@ namespace AutoLend.Data.Resources.Reservation {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu .
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu DECLARE @CustomerId CHAR(36) = (SELECT dbo.Customers.Id FROM dbo.Customers WHERE FirstName = @FirstName AND LastName = @LastName AND Email = @Email)
+        ///DECLARE @CarId INT = (SELECT Id FROM dbo.Cars WHERE LicensePlate = @LicensePlate)
+        ///DECLARE @StatusId  INT = (SELECT Id FROM dbo.ReservationStatus WHERE StatusName = &apos;Confirmed&apos;)
+        ///
+        ///
+        ///IF @CustomerId IS NULL BEGIN RAISERROR (&apos;Customer not found or is not active.&apos;,16, 1) END
+        ///If @CarId IS NULL BEGIN RAISERROR (&apos;Car not found or is not active.&apos;,16, 1) END
+        ///
+        ///INSER [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Reservation_Create {
             get {
@@ -70,8 +78,12 @@ namespace AutoLend.Data.Resources.Reservation {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE dbo.Reservation
-        ///SET isActive = 0 
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
+        ///(EXISTS (SELECT 1 FROM dbo.Reservations WHERE Id = @reservationId AND IsActive = 0)) OR (NOT EXISTS (SELECT 1 FROM dbo.Reservations WHERE Id = @reservationId)) 
+        ///BEGIN RAISERROR (&apos;Reservation not found or is not active.&apos;,16, 1) END
+        ///ELSE
+        ///
+        ///UPDATE dbo.Reservation SET isActive = 0 
         ///WHERE id = @reservationId AND isActive = 1;.
         /// </summary>
         internal static string Reservation_Delete {
@@ -81,7 +93,14 @@ namespace AutoLend.Data.Resources.Reservation {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT * FROM dbo.Reservation WHERE isActive = 1;.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT dbo.Reservations.Id, dbo.Reservations.CreateDate, dbo.Reservations.ModifyDate, 
+        ///ReservationFrom, ReservationTo, dbo.Reservations.Description, 
+        ///StatusName, BrandName, ModelName, LicensePlate, FirstName, LastName, Email 
+        ///FROM dbo.Reservations 
+        ///INNER JOIN dbo.ReservationStatus ON dbo.Reservations.StatusId = dbo.ReservationStatus.Id
+        ///INNER JOIN dbo.Cars ON dbo.Reservations.CarId = dbo.Cars.Id
+        ///INNER JOIN dbo.Customers ON dbo.Reservations.CustomerId = dbo.Customers.Id
+        ///INNER JOIN dbo.Models ON dbo.Car [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Reservation_GetAll {
             get {
@@ -90,11 +109,17 @@ namespace AutoLend.Data.Resources.Reservation {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT DISTINCT * 
-        ///FROM dbo.Reservation AS reservation 
-        ///WHERE 
-        ///reservation.id = @reservationId 
-        ///AND isActive = 1;.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
+        ///(EXISTS (SELECT 1 FROM dbo.Reservations WHERE Id = @reservationId AND IsActive = 0)) OR (NOT EXISTS (SELECT 1 FROM dbo.Reservations WHERE Id = @reservationId)) 
+        ///BEGIN RAISERROR (&apos;Reservation not found or is not active.&apos;,16, 1) END
+        ///ELSE
+        ///
+        ///
+        ///SELECT dbo.Reservations.Id, dbo.Reservations.CreateDate, dbo.Reservations.ModifyDate, 
+        ///ReservationFrom, ReservationTo, dbo.Reservations.Description, 
+        ///StatusName, BrandName, ModelName, LicensePlate, FirstName, LastName, Email 
+        ///FROM dbo.Reservations 
+        ///INNER JOIN  [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Reservation_GetById {
             get {

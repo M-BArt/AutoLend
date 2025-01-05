@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoLend.API.Controllers
 {
-    [Route("")]
+    [Route("Reservation")]
     [ApiController]
     public partial class ReservationController : ControllerBase
     {

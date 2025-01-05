@@ -1,4 +1,5 @@
-﻿using AutoLend.Data.DataModels.Reservation;
+﻿using AutoLend.Core.ApiModels.Reservation;
+using AutoLend.Data.DataModels.Reservation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoLend.API.Controllers
@@ -6,7 +7,7 @@ namespace AutoLend.API.Controllers
     public partial class ReservationController
     {
         [HttpPost()]
-        public async Task<IActionResult> Create([FromBody] Reservation reservation)
+        public async Task<IActionResult> Create([FromBody] ReservationCreateRequest reservation)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
