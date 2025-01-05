@@ -1,10 +1,17 @@
-﻿namespace AutoLend.Data.CoreModels.Car {
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AutoLend.Data.CoreModels.Car {
     public class CarSearchDTO {
-        public string? ModelName { get; set; }
-        public string? BrandName { get; set; }
-        public int? YearFrom { get; set; }
-        public int? YearTo { get; set; }
-        public string? LicensePlate { get; set; }
+        public string? text { get; set; }
+        public string? ModelIdsJSON { get; set; }
+        public int? BrandId { get; set; }
+        public DateTime? YearFrom { get; set; }
+        public DateTime? YearTo { get; set; }
         public bool? IsAvailable { get; set; }
     }
+
+
+    public class ModelIdItem {
+        public int ModelId { get; set; }
+    };
 }

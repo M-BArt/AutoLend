@@ -2,6 +2,9 @@
 using AutoLend.Data.CoreModels.Car;
 using AutoLend.Data.DataModels.Car;
 using AutoLend.Data.Repositories.Car;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using JsonConverter = Newtonsoft.Json.JsonConverter;
 
 namespace AutoLend.Core.Services.Car {
     internal class CarService : ICarService {
@@ -37,12 +40,17 @@ namespace AutoLend.Core.Services.Car {
 
         public async Task<IEnumerable<CarSearch?>> Search( CarSearchRequest car ) {
 
+            var modelIds = car.ModelIds?.Select(x => new ModelIdItem() { 
+                ModelId = x,
+            }).ToList();
+
+            var modelIdsJson = modelIds is null ? string.Empty: JsonConvert.SerializeObject(modelIds);
+
             CarSearchDTO CarDto = new() {
-                ModelName = car.ModelName,
-                BrandName = car.BrandName,
+                ModelIdsJSON = modelIdsJson,
+                BrandId = car.BrandId,
                 YearFrom = car.YearFrom,
                 YearTo = car.YearTo,
-                LicensePlate = car.LicensePlate,
                 IsAvailable = car.IsAvailable,
             };
 

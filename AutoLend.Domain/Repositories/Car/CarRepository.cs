@@ -68,11 +68,11 @@ namespace AutoLend.Data.Repositories.Car.Car {
                 await connection.OpenAsync();
 
                 var parameters = new {
-                    car.ModelName,
-                    car.BrandName,
+                    car.text,
+                    car.ModelIdsJSON,
+                    car.BrandId,
                     car.YearFrom,
                     car.YearTo,
-                    car.LicensePlate,
                     car.IsAvailable,
                 };
 

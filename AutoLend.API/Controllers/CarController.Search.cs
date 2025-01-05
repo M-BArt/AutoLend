@@ -7,6 +7,9 @@ namespace AutoLend.API.Controllers.CarController {
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery] CarSearchRequest car) {
 
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try { 
                 return Ok(await _carService.Search(car));
             } catch (Exception ex) {

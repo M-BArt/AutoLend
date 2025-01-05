@@ -37,7 +37,7 @@
     <EmbeddedResource Update="Resources\Car\Sql.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Sql.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Customer\Sql.resx">
       <Generator>ResXFileCodeGenerator</Generator>
