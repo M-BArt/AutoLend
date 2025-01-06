@@ -13,7 +13,7 @@
 	S.StatusName,
 	RE.TotalCost
 
-FROM dbo.Rental					AS RE
+FROM dbo.Rentals				AS RE
 	INNER JOIN dbo.Cars			AS CA	ON RE.CarId = CA.Id
 	INNER JOIN dbo.Customers	AS CU	ON RE.CustomerId = CU.Id
 	INNER JOIN dbo.Models		AS M	ON CA.ModelId = M.Id

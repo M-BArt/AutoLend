@@ -114,14 +114,14 @@ namespace AutoLend.Data.Resources.Customer {
         ///	Id = @customerId 
         ///AND IsActive = 1;
         ///
-        ///UPDATE dbo.Reservation
+        ///UPDATE dbo.Reservations
         ///SET 
         ///	ModifyDate = GETDATE(),
         ///	StatusId = 2,
         ///	IsActive = 0
         ///WHERE 
         ///	dbo.Reservation.CustomerId = @customerId
-        ///AND d [obcięto pozostałą część ciągu]&quot;;.
+        ///AND  [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Customer_Delete {
             get {
@@ -172,6 +172,34 @@ namespace AutoLend.Data.Resources.Customer {
         internal static string Customer_GetById {
             get {
                 return ResourceManager.GetString("Customer_GetById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF @Field = &apos;Email&apos;
+        ///    BEGIN
+        ///        SELECT CASE
+        ///            WHEN EXISTS (
+        ///                SELECT 1
+        ///                FROM [dbo].[Customers]
+        ///                WHERE Email = @Value
+        ///                AND (@ExcludeCustomerId IS NULL OR Id != @ExcludeCustomerId)
+        ///            )
+        ///            THEN 1
+        ///            ELSE 0
+        ///        END;
+        ///    END
+        ///IF @Field = &apos;LicenseNumber&apos;
+        ///    BEGIN
+        ///        SELECT CASE
+        ///            WHEN EXISTS (
+        ///                SELECT 1
+        ///                FROM [dbo].[Customers]
+        ///                WH [obcięto pozostałą część ciągu]&quot;;.
+        /// </summary>
+        internal static string Customer_IsCustomerFieldUnique {
+            get {
+                return ResourceManager.GetString("Customer_IsCustomerFieldUnique", resourceCulture);
             }
         }
         

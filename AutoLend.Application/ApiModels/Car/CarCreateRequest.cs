@@ -10,5 +10,6 @@ namespace AutoLend.Core.ApiModels.Car {
         [Required(ErrorMessage = "License plate is required.")]
         public required string LicensePlate { get; set; } = string.Empty;
         public bool IsAvailable { get; set; }
+        public required decimal Cost { get; set; }
     }
 }

@@ -118,28 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Car_Create" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Car_Create.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Car_Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Car_Delete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Car_GetAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Car_GetAll.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Car_GetById" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Car_GetById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Car_GetByLicensePlate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Car_GetByLicensePlate.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Car_LicensePlateExistsAsync" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Car_LicensePlateExistsAsync.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Car_Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Car_Search.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Car_Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Car_Update.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="Model_GetByModelName" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Model_GetByModelName.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

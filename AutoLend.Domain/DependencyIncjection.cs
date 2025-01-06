@@ -5,6 +5,7 @@ using AutoLend.Data.Repositories.Customer;
 using AutoLend.Data.Repositories.Rental;
 using AutoLend.Data.Repositories.Reservation;
 using AutoLend.Data.Repositories.Car.Car;
+using AutoLend.Data.Repositories.Model;
 
 
 namespace AutoLend.Data
@@ -19,6 +20,9 @@ namespace AutoLend.Data
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IRentalRepository, RentalRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IModelRepository, ModelRepository>();
+            //services.AddScoped<IStatusRepository, StatusRepository>();
+
 
             return services;
         }

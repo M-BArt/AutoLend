@@ -30,11 +30,6 @@ DECLARE @StatusId INT = (
  		AND IsActive = 1
 	)
 
-IF @CustomerId IS NULL 
-	BEGIN RAISERROR ('Customer not found or is not active.',16, 1) END
-If @CarId IS NULL 
-	BEGIN RAISERROR ('Car not found or is not active.',16, 1) END
-
 INSERT INTO dbo.Reservations ( 
 	[CreateDate],
 	[ModifyDate],

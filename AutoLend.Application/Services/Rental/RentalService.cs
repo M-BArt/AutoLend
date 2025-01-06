@@ -1,4 +1,5 @@
 ﻿using AutoLend.Core.ApiModels.Rental;
+using AutoLend.Core.Esceptions;
 using AutoLend.Data.CoreModels.Rental;
 using AutoLend.Data.Repositories.Car;
 using AutoLend.Data.Repositories.Rental;
@@ -9,9 +10,9 @@ namespace AutoLend.Core.Services.Rental
     {
 
         private readonly IRentalRepository _rentalRepository;
-        private ICarRepository _carRepository;
+        private readonly ICarRepository _carRepository;
 
-        public RentalService(IRentalRepository rentalRepository, ICarRepository carRepository)
+        public RentalService( IRentalRepository rentalRepository, ICarRepository carRepository)
         {
             _rentalRepository = rentalRepository;
             _carRepository = carRepository;
@@ -19,9 +20,9 @@ namespace AutoLend.Core.Services.Rental
         public async Task CreateRental( RentalCreateRequest rental )
         {
 
-            if ((rental.ReturnDate - rental.RentalDate).Days > 7) throw new Exception("Rental period too long"); 
+            if ((rental.ReturnDate - rental.RentalDate).Days > 7) throw new BusinessException("Rental period too long"); 
             
-            var car = await _carRepository.GetByLicensePlateAsync(rental.LicensePlate) ?? throw new Exception("No found car with the given license plates");
+            var car = await _carRepository.GetByLicensePlateAsync(rental.LicensePlate) ?? throw new BusinessException("No found car with the given license plates");
             
             var TotalCost = ((rental.ReturnDate - rental.RentalDate).Days) * car.Cost;
             

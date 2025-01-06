@@ -14,6 +14,7 @@ namespace AutoLend.Core.ApiModels.Customer {
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public required string Email { get; set; }
         [Required(ErrorMessage = "License number is required")]
+        [RegularExpression(@"^[A-Z]{2}\d{8}$", ErrorMessage = "License number must be in the format CCNNNNNNNN.")]
         public required string LicenseNumber { get; set; }
         [Required(ErrorMessage = "Phone is required")]
         [Phone(ErrorMessage = "Invalid Phone number")]

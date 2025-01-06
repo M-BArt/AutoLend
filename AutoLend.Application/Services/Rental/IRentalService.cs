@@ -1,4 +1,5 @@
 ﻿using AutoLend.Core.ApiModels.Rental;
+using AutoLend.Data.CoreModels.Rental;
 
 namespace AutoLend.Core.Services.Rental
 {

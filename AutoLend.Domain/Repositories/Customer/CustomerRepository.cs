@@ -3,16 +3,15 @@ using AutoLend.Data.Resources.Customer;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Transactions;
 
 namespace AutoLend.Data.Repositories.Customer {
     internal class CustomerRepository : ICustomerRepository {
 
         private readonly string _connectionString;
-
         public CustomerRepository( IConfiguration configuration ) {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
-
         public async Task CreateAsync( CustomerCreateDTO customer ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
@@ -60,9 +59,18 @@ namespace AutoLend.Data.Repositories.Customer {
             }
         }
         public async Task DeleteAsync( Guid customerId ) {
+            using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) {
+                using (SqlConnection connection = new(_connectionString)) {
+                    await connection.OpenAsync();
+                    await connection.ExecuteAsync(Sql.Customer_Delete, new { customerId });
+                }
+                transaction.Complete();
+            }
+        }
+        public async Task<bool> IsCustomerFieldUniqueAsync( string field, string value, Guid? excludeCustomerId = null ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
-                await connection.ExecuteAsync(Sql.Customer_Delete, new { customerId });
+                return await connection.QueryFirstOrDefaultAsync<bool>(Sql.Customer_IsCustomerFieldUnique, new { field, value, excludeCustomerId });
             }
         }
     }

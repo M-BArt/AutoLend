@@ -9,7 +9,6 @@ namespace AutoLend.API
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
             builder.Services.AddCors(options => {
                 options.AddPolicy("AllowAll",
@@ -18,6 +17,13 @@ namespace AutoLend.API
                                .AllowAnyMethod()
                                .AllowAnyHeader();
                     });
+            });
+            
+            builder.Services.AddSwaggerGen(options =>
+            {
+                var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
 
             builder.Services

@@ -11,5 +11,6 @@ namespace AutoLend.Data.Repositories.Car {
         Task<IEnumerable<CarSearch?>> SearchAsync( CarSearchDTO car );
 
         Task<CarGetByLicensePlate?> GetByLicensePlateAsync( string licensePlate );
+        Task<bool> LicensePlateExistsAsync ( string licenscePlate, int? excludePlate = null );
     }
 }

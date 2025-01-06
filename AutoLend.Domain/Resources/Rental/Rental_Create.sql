@@ -29,7 +29,7 @@ DECLARE @StatusId INT = (
 	)
 
 BEGIN
-INSERT INTO dbo.Rental
+INSERT INTO dbo.Rentals
 	(
 	[CreateDate],
     [ModifyDate],

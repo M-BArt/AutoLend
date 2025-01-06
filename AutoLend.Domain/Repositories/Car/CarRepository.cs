@@ -10,17 +10,15 @@ namespace AutoLend.Data.Repositories.Car.Car {
     internal class CarRepository : ICarRepository {
 
         private readonly string _connectionString;
-
         public CarRepository( IConfiguration configuration ) {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
-
         public async Task CreateAsync( CarCreateDTO car ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
 
                 var parameters = new {
-                    car.ModelName,
+                    car.ModelId,
                     car.Year,
                     car.LicensePlate,
                     car.IsAvailable
@@ -50,7 +48,8 @@ namespace AutoLend.Data.Repositories.Car.Car {
                     car.ModelName,
                     car.Year,
                     car.LicensePlate,
-                    car.IsAvailable
+                    car.IsAvailable,
+                    car.Cost
                 };
 
                 await connection.ExecuteAsync(Sql.Car_Update, parameters);
@@ -62,7 +61,6 @@ namespace AutoLend.Data.Repositories.Car.Car {
                 await connection.ExecuteAsync(Sql.Car_Delete, new { carId });
             }
         }
-
         public async Task<IEnumerable<CarSearch?>> SearchAsync( CarSearchDTO car ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
@@ -79,11 +77,16 @@ namespace AutoLend.Data.Repositories.Car.Car {
                 return await connection.QueryAsync<CarSearch>(Sql.Car_Search, parameters);
             }
         }
-
         public async Task<CarGetByLicensePlate?> GetByLicensePlateAsync(string LicensePlate ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
                 return await connection.QueryFirstOrDefaultAsync<CarGetByLicensePlate>(Sql.Car_GetByLicensePlate, new {LicensePlate});
+            }
+        }
+        public async Task<bool> LicensePlateExistsAsync( string LicensePlate , int? excludeCarId = null) {
+            using (SqlConnection connection = new(_connectionString)) {
+                await connection.OpenAsync();
+                return await connection.QueryFirstOrDefaultAsync<bool>(Sql.Car_LicensePlateExistsAsync, new { LicensePlate, excludeCarId });
             }
         }
     }

@@ -9,11 +9,9 @@ namespace AutoLend.Data.Repositories.Reservation {
     internal class ReservationRepository : IReservationRepository {
 
         private readonly string _connectionString;
-
         public ReservationRepository( IConfiguration configuration ) {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
-
         public async Task CreateAsync( ReservationCreateDTO reservation ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();

@@ -7,5 +7,7 @@ namespace AutoLend.Data.Repositories.Customer {
         Task<DataModels.Customer.Customer?> GetByIdAsync( Guid customerId );
         Task UpdateAsync( CustomerUpdateDTO customer );
         Task DeleteAsync( Guid customerId );
+        Task<bool> IsCustomerFieldUniqueAsync( string value, string field, Guid? excludeCustomerId = null);
+
     }
 }

@@ -1,26 +1,31 @@
 ﻿using AutoLend.Core.ApiModels.Car;
+using AutoLend.Core.Esceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 
 namespace AutoLend.API.Controllers.CarController {
     public partial class CarController {
+
+        /// <summary>
+        /// Endpoint to Update the details of an existing car by its ID.
+        /// </summary>
+        /// <param name="carId"></param>
+        /// <param name="car"></param>
+        /// <returns></returns>
         [HttpPut("{carId}")]
         public async Task<IActionResult> Update( [FromRoute] int carId, [FromBody] CarUpdateRequest car ) {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try {
                 await _carService.UpdateCar(carId, car);
                 return Ok("Car updated");
-            } catch (SqlException ex) {
-                if (ex.Message.Contains("Car not found.")) {
-                    return BadRequest("Car not found.");
-                } else if
-                    (ex.Message.Contains("Model not found.")) {
-                    return BadRequest("Model not found.");
-                }
-                _logger.LogError(ex, "SQL error occurred: {Message}", ex.Message);
-                return BadRequest(ModelState);
             } catch (Exception ex) {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, "Internal Error Server");
+
+                return ex switch {
+                    BusinessException => BadRequest(ex.Message),
+                    _ => StatusCode(500, "Internal Error Server")
+                };
             }
         }
     }
