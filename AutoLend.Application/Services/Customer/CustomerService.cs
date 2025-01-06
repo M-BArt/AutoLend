@@ -1,7 +1,6 @@
 ﻿using AutoLend.Core.ApiModels.Customer;
 using AutoLend.Core.Esceptions;
 using AutoLend.Data.CoreModels.Customer;
-using AutoLend.Data.DataModels.Customer;
 using AutoLend.Data.Repositories.Customer;
 
 namespace AutoLend.Core.Services.Customer {
@@ -15,16 +14,16 @@ namespace AutoLend.Core.Services.Customer {
             return await _customerRepository.GetAllAsync();
         }
         public async Task DeleteCustomer( Guid customerId ) {
-            
+
             if (await _customerRepository.GetByIdAsync(customerId) is null)
                 throw new BusinessException("Customer not found or is not active.");
 
 
-                await _customerRepository.DeleteAsync(customerId);
+            await _customerRepository.DeleteAsync(customerId);
         }
         public async Task CreateCustomer( CustomerCreateRequest customer ) {
 
-            if (await _customerRepository.IsCustomerFieldUniqueAsync("LicenseNumber",customer.LicenseNumber))
+            if (await _customerRepository.IsCustomerFieldUniqueAsync("LicenseNumber", customer.LicenseNumber))
                 throw new BusinessException("License number already exists.");
 
 
@@ -48,7 +47,7 @@ namespace AutoLend.Core.Services.Customer {
             if (await _customerRepository.GetByIdAsync(customerId) is null)
                 throw new BusinessException("Customer not found.");
 
-            if(!string.IsNullOrEmpty(customer.LicenseNumber))
+            if (!string.IsNullOrEmpty(customer.LicenseNumber))
                 if (await _customerRepository.IsCustomerFieldUniqueAsync("LicenseNumber", customer.LicenseNumber, customerId))
                     throw new BusinessException("License number already exists.");
 

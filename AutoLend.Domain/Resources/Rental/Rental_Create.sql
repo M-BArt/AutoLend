@@ -1,34 +1,34 @@
 ﻿DECLARE @CustomerId CHAR(36) = (
 	SELECT 
-		dbo.Customers.Id 
+		[dbo].[Customers].[Id] 
 	FROM 
-		dbo.Customers 
+		[dbo].[Customers] 
 	WHERE 
-			LicenseNumber = @LicenseNumber
-		AND IsActive = 1
+			[LicenseNumber] = @LicenseNumber
+		AND [IsActive] = 1
 	)
 
 DECLARE @CarId INT = (
 	SELECT 
-		dbo.Cars .Id 
+		[dbo].[Cars].[Id]
 	FROM 
-		dbo.Cars 
+		[dbo].[Cars]
 	WHERE 
-		LicensePlate = @LicensePlate
-	AND IsActive = 1
+		[LicensePlate] = @LicensePlate
+	AND [IsActive] = 1
 	)
 
 DECLARE @StatusId INT = (
 	SELECT 
-		Id 
+		[Id] 
 	FROM 
-		dbo.Status 
+		[dbo].[Status] 
 	WHERE 
-			StatusName = 'Confirmed'
- 		AND IsActive = 1
+			[StatusName] = 'Confirmed'
+ 		AND [IsActive] = 1
 	)
 
-BEGIN
+
 INSERT INTO dbo.Rentals
 	(
 	[CreateDate],
@@ -53,5 +53,5 @@ VALUES
 	@TotalCost,
 	1
 	)
-END
 
+SELECT Scope_Identity()

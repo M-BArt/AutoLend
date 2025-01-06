@@ -63,40 +63,38 @@ namespace AutoLend.Data.Resources.Rental {
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu DECLARE @CustomerId CHAR(36) = (
         ///	SELECT 
-        ///		dbo.Customers.Id 
+        ///		[dbo].[Customers].[Id] 
         ///	FROM 
-        ///		dbo.Customers 
+        ///		[dbo].[Customers] 
         ///	WHERE 
-        ///			LicenseNumber = @LicenseNumber
-        ///		AND IsActive = 1
+        ///			[LicenseNumber] = @LicenseNumber
+        ///		AND [IsActive] = 1
         ///	)
         ///
         ///DECLARE @CarId INT = (
         ///	SELECT 
-        ///		dbo.Cars .Id 
+        ///		[dbo].[Cars].[Id]
         ///	FROM 
-        ///		dbo.Cars 
+        ///		[dbo].[Cars]
         ///	WHERE 
-        ///		LicensePlate = @LicensePlate
-        ///	AND IsActive = 1
+        ///		[LicensePlate] = @LicensePlate
+        ///	AND [IsActive] = 1
         ///	)
         ///
         ///DECLARE @StatusId INT = (
         ///	SELECT 
-        ///		Id 
+        ///		[Id] 
         ///	FROM 
-        ///		dbo.Status 
+        ///		[dbo].[Status] 
         ///	WHERE 
-        ///			StatusName = &apos;Confirmed&apos;
-        /// 		AND IsActive = 1
+        ///			[StatusName] = &apos;Confirmed&apos;
+        /// 		AND [IsActive] = 1
         ///	)
         ///
-        ///BEGIN
-        ///INSERT INTO dbo.Rental
+        ///
+        ///INSERT INTO dbo.Rentals
         ///	(
-        ///	[CreateDate],
-        ///    [ModifyDate],
-        ///    [CarId] [obcięto pozostałą część ciągu]&quot;;.
+        ///	[CreateDate],        /// [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Rental_Create {
             get {
@@ -105,9 +103,25 @@ namespace AutoLend.Data.Resources.Rental {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE dbo.Rental
-        ///SET isActive = 0 
-        ///WHERE id = @rentalId AND isActive = 1;.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE 
+        ///	[dbo].[Rentals]
+        ///SET 
+        ///	[IsActive] = 0 
+        ///WHERE 
+        ///	[Id] = @rentalId 
+        ///AND [IsActive] = 1
+        ///AND [StatusId] != 1;
+        ///
+        ///
+        ///UPDATE [CU]
+        ///SET 
+        ///	[CU].[HasActiveRental] = 0
+        ///FROM 
+        ///	[dbo].[Customers] AS [CU]
+        ///WHERE 
+        ///	[CU].[Id] = @customerId
+        ///AND [CU].[IsActive] = 1
+        ///.
         /// </summary>
         internal static string Rental_Delete {
             get {
@@ -117,28 +131,25 @@ namespace AutoLend.Data.Resources.Rental {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT
-        ///	RE.Id,
-        ///	RE.CreateDate,
-        ///	RE.ModifyDate,
-        ///	CA.LicensePlate,
-        ///	M.ModelName,
-        ///	B.BrandName,
-        ///	CU.FirstName,
-        ///	CU.LastName,
-        ///	CU.LicenseNumber,
-        ///	RE.RentalDate,
-        ///	RE.ReturnDate,
-        ///	S.StatusName,
-        ///	RE.TotalCost
+        ///	[RE].[Id],
+        ///	[RE].[CreateDate],
+        ///	[RE].[ModifyDate],
+        ///	[CA].[CarId],
+        ///	[CA].[LicensePlate],
+        ///	[M].[ModelName],
+        ///	[B].[BrandName],
+        ///	[CU].[FirstName],
+        ///	[CU].[LastName],
+        ///	[CU].[LicenseNumber],
+        ///	[RE].[RentalDate],
+        ///	[RE].[ReturnDate],
+        ///	[S].[StatusName],
+        ///	[RE].[TotalCost]
         ///
-        ///FROM dbo.Rental					AS RE
-        ///	INNER JOIN dbo.Cars			AS CA	ON RE.CarId = CA.Id
-        ///	INNER JOIN dbo.Customers	AS CU	ON RE.CustomerId = CU.Id
-        ///	INNER JOIN dbo.Models		AS M	ON CA.ModelId = M.Id
-        ///	INNER JOIN dbo.Brands		AS B	ON M.BrandId = B.Id
-        ///	INNER JOIN dbo.Status		AS S	ON RE.StatusId = S.Id
-        ///
-        ///WHER [obcięto pozostałą część ciągu]&quot;;.
+        ///FROM dbo.Rentals					AS [RE]
+        ///	INNER JOIN [dbo].[Cars]			AS [CA]	ON [RE.[CarId] = [CA].[Id]
+        ///	INNER JOIN [dbo].[Customers]	AS [CU]	ON [RE.[CustomerId] = [CU].[Id]
+        ///	INNER JOIN [dbo].[Models]		AS [M]	ON [CA.[ModelId] = [M].[Id] [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Rental_GetAll {
             get {
@@ -147,29 +158,26 @@ namespace AutoLend.Data.Resources.Rental {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
-        ///(EXISTS (SELECT 1 FROM dbo.Rental WHERE Id = @rentalId AND IsActive = 0)) 
-        ///OR (NOT EXISTS (SELECT 1 FROM dbo.Rental WHERE Id = @rentalId AND IsActive = 1)) 
-        ///BEGIN RAISERROR (&apos;Rental not found or is not active.&apos;,16, 1) END
-        ///ELSE
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT
+        ///	[RE].[Id],
+        ///	[RE].[CreateDate],
+        ///	[RE].[ModifyDate],
+        ///	[CA].[LicensePlate],
+        ///	[M].[ModelName],
+        ///	[B].[BrandName],
+        ///	[CU].[FirstName],
+        ///	[CU].[LastName],
+        ///	[CU].[LicenseNumber],
+        ///	[RE].[RentalDate],
+        ///	[RE].[ReturnDate],
+        ///	[S].[StatusName],
+        ///	[RE].[TotalCost]
         ///
-        ///SELECT
-        ///	RE.Id,
-        ///	RE.CreateDate,
-        ///	RE.ModifyDate,
-        ///	CA.LicensePlate,
-        ///	M.ModelName,
-        ///	B.BrandName,
-        ///	CU.FirstName,
-        ///	CU.LastName,
-        ///	CU.LicenseNumber,
-        ///	RE.RentalDate,
-        ///	RE.ReturnDate,
-        ///	S.StatusName,
-        ///	RE.TotalCost
-        ///
-        ///FROM dbo.Rental					AS RE
-        ///	INNER JOIN dbo.Cars			AS CA	 [obcięto pozostałą część ciągu]&quot;;.
+        ///FROM dbo.Rentals					AS [RE]
+        ///	INNER JOIN [dbo].[Cars]			AS [CA]	ON [RE].[CarId] = [CA].[Id]
+        ///	INNER JOIN [dbo].[Customers]	AS [CU]	ON [RE].[CustomerId] = [CU].[Id]
+        ///	INNER JOIN [dbo].[Models]		AS [M]	ON [CA].[ModelId] = [M].[Id]
+        ///	INNER JOIN [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Rental_GetById {
             get {
@@ -178,11 +186,55 @@ namespace AutoLend.Data.Resources.Rental {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu .
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT *
+        ///FROM
+        ///	[dbo].[Rentals] AS [RE]
+        ///WHERE
+        ///	[RE].[ReturnDate] &lt; GETDATE()
+        ///AND	[RE].[StatusId] = 1
+        ///AND	[RE].[IsActive] = 1.
+        /// </summary>
+        internal static string Rental_GetItemsWithPastReturnDateAsync {
+            get {
+                return ResourceManager.GetString("Rental_GetItemsWithPastReturnDateAsync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE RE
+        ///	SET 
+        ///		[RE].[StatusId]		= COALESCE(	NULLIF(@StatusId, &apos;&apos;),		[RE].[StatusId]),
+        ///		[RE].[RentalDate]	= COALESCE(	NULLIF(@RentalDate, &apos;&apos;),	[RE].[RentalDate]),
+        ///		[RE].[ReturnDate]	= COALESCE(	NULLIF(@ReturnDate, &apos;&apos;),	[RE].[ReturnDate]),
+        ///		[RE].[Cost]			= COALESCE(	NULLIF(@Cost, &apos;&apos;),			[RE].[Cost])
+        ///	FROM 
+        ///		[dbo].[Rentals] AS [RE]
+        ///	WHERE 
+        ///		[RE].[Id] = @Id
+        ///	AND [RE].[IsActive] = 1;
+        ///
+        ///.
         /// </summary>
         internal static string Rental_Update {
             get {
                 return ResourceManager.GetString("Rental_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE [RE]
+        ///SET
+        ///	[RE].[ModifyDate] = GETDATE(),
+        ///	[RE].[StatusId] = @statusId
+        ///FROM
+        ///	[dbo].[Rentals] AS [RE]
+        ///WHERE
+        ///	[RE].[Id] = @rentalId
+        ///AND [RE].[IsActive] = 1.
+        /// </summary>
+        internal static string Rental_UpdateStatusAsync {
+            get {
+                return ResourceManager.GetString("Rental_UpdateStatusAsync", resourceCulture);
             }
         }
     }

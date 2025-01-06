@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AutoLend.Data.CoreModels.Car {
+﻿namespace AutoLend.Data.CoreModels.Car {
     public class CarSearchDTO {
         public string? text { get; set; }
         public string? ModelIdsJSON { get; set; }
@@ -13,7 +11,6 @@ namespace AutoLend.Data.CoreModels.Car {
         public string? OrderBy { get; set; }
         public int? OrderDir { get; set; }
     }
-
 
     public class ModelIdItem {
         public int ModelId { get; set; }

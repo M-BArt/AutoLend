@@ -16,7 +16,7 @@ namespace AutoLend.Data.Repositories.Reservation {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
 
-                var parameters = new { 
+                var parameters = new {
                     reservation.ReservationFrom,
                     reservation.ReservationTo,
                     reservation.Description,
@@ -51,7 +51,7 @@ namespace AutoLend.Data.Repositories.Reservation {
                     reservation.ReservationTo,
                     reservation.Description,
                 };
-                
+
                 await connection.ExecuteAsync(Sql.Reservation_Update, parameters);
             }
         }

@@ -25,5 +25,4 @@ VALUES
 	@DateOfBirth,
 	1
 	)
-END
-
+SELECT Scope_Identity()

@@ -1,13 +1,9 @@
 ﻿using AutoLend.Core.ApiModels.Reservation;
 using AutoLend.Core.Esceptions;
-using AutoLend.Data.DataModels.Reservation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 
-namespace AutoLend.API.Controllers
-{
-    public partial class ReservationController
-    {
+namespace AutoLend.API.Controllers {
+    public partial class ReservationController {
         /// <summary>
         /// Endpoint to update an existing reservation by its ID.
         /// </summary>
@@ -15,8 +11,7 @@ namespace AutoLend.API.Controllers
         /// <param name="reservation"></param>
         /// <returns></returns>
         [HttpPut("{reservationId}")]
-        public async Task<IActionResult> Update( [FromRoute] int reservationId, [FromBody] ReservationUpdateRequest reservation)
-        {
+        public async Task<IActionResult> Update( [FromRoute] int reservationId, [FromBody] ReservationUpdateRequest reservation ) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

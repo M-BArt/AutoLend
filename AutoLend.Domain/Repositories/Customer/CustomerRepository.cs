@@ -1,4 +1,5 @@
 ﻿using AutoLend.Data.CoreModels.Customer;
+using AutoLend.Data.DataModels.Customer;
 using AutoLend.Data.Resources.Customer;
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -59,18 +60,26 @@ namespace AutoLend.Data.Repositories.Customer {
             }
         }
         public async Task DeleteAsync( Guid customerId ) {
-            using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) {
-                using (SqlConnection connection = new(_connectionString)) {
-                    await connection.OpenAsync();
+
+            using (SqlConnection connection = new(_connectionString)) {
+                await connection.OpenAsync();
+
+                using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) {
                     await connection.ExecuteAsync(Sql.Customer_Delete, new { customerId });
+                    transaction.Complete();
                 }
-                transaction.Complete();
             }
         }
         public async Task<bool> IsCustomerFieldUniqueAsync( string field, string value, Guid? excludeCustomerId = null ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
                 return await connection.QueryFirstOrDefaultAsync<bool>(Sql.Customer_IsCustomerFieldUnique, new { field, value, excludeCustomerId });
+            }
+        }
+        public async Task<CustomerGetByLicenseNumber?> GetByLicenseNumber( string licenseNumber ) {
+            using (SqlConnection connection = new(_connectionString)) {
+                await connection.OpenAsync();
+                return await connection.QueryFirstOrDefaultAsync<CustomerGetByLicenseNumber>(Sql.Customer_IsCustomerFieldUnique, new { licenseNumber });
             }
         }
     }

@@ -9,11 +9,11 @@ namespace AutoLend.Core.ApiModels.Car {
         public DateTime? YearTo { get; set; }
         public bool? IsAvailable { get; set; }
 
-        public int? Page {  get; set; } 
-        public int? PageSize {  get; set; } 
-        public string? OrderBy {  get; set; } 
-        public int? OrderDir {  get; set; } 
-        
+        public int? Page { get; set; }
+        public int? PageSize { get; set; }
+        public string? OrderBy { get; set; }
+        public int? OrderDir { get; set; }
+
 
 
         public IEnumerable<ValidationResult> Validate( ValidationContext validationContext ) {
@@ -21,7 +21,7 @@ namespace AutoLend.Core.ApiModels.Car {
                 if (YearFrom > YearTo) {
 
                     yield return new ValidationResult(
-                        $"YeraFrom jest większe niż YearTo",
+                        $"'Year from is greater than 'Year to'",
                         new[] { nameof(YearFrom) });
                 }
             }

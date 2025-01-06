@@ -1,33 +1,33 @@
 ﻿DECLARE @CustomerId CHAR(36) = (
 	SELECT 
-		dbo.Customers.Id 
+		[Id] 
 	FROM 
-		dbo.Customers 
+		[dbo].[Customers] 
 	WHERE 
-			FirstName = @FirstName 
-		AND LastName = @LastName 
-		AND Email = @Email
-		AND IsActive = 1
+			[FirstName] = @FirstName 
+		AND [LastName] = @LastName 
+		AND [Email] = @Email
+		AND [IsActive] = 1
 	)
 
 DECLARE @CarId INT = (
 	SELECT 
-		Id 
+		[Id] 
 	FROM 
-		dbo.Cars 
+		[dbo].[Cars] 
 	WHERE 
-		LicensePlate = @LicensePlate
-	AND IsActive = 1
+		[LicensePlate] = @LicensePlate
+	AND [IsActive] = 1
 	)
 
 DECLARE @StatusId INT = (
 	SELECT 
-		Id 
+		[Id] 
 	FROM 
-		dbo.Status 
+		[dbo].[Status] 
 	WHERE 
-			StatusName = 'Confirmed'
- 		AND IsActive = 1
+			[StatusName] = 'Confirmed'
+ 		AND [IsActive] = 1
 	)
 
 INSERT INTO dbo.Reservations ( 
@@ -52,3 +52,4 @@ VALUES (
 	1
 )
 
+SELECT SCOPE_Identity()

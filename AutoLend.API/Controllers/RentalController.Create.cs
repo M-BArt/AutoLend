@@ -1,12 +1,9 @@
 ﻿using AutoLend.Core.ApiModels.Rental;
 using AutoLend.Core.Esceptions;
-using AutoLend.Data.DataModels.Rental;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AutoLend.API.Controllers
-{
-    public partial class RentalController
-    {
+namespace AutoLend.API.Controllers {
+    public partial class RentalController {
 
         /// <summary>
         /// Endpoint to create a new rental.
@@ -14,8 +11,7 @@ namespace AutoLend.API.Controllers
         /// <param name="rental"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Create([FromBody] RentalCreateRequest rental)
-        {
+        public async Task<IActionResult> Create( [FromBody] RentalCreateRequest rental ) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

@@ -8,12 +8,10 @@ namespace AutoLend.Data.Repositories.Rental {
     internal class RentalRepository : IRentalRepository {
 
         private readonly string _connectionString;
-
         public RentalRepository( IConfiguration configuration ) {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
-
-        public async Task CreateAsync( RentalCreateDTO rental ) {
+        public async Task<int> CreateAsync( RentalCreateDTO rental ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
 
@@ -25,7 +23,7 @@ namespace AutoLend.Data.Repositories.Rental {
                     rental.TotalCost
                 };
 
-                await connection.ExecuteAsync(Sql.Rental_Create, parameters);
+                return await connection.ExecuteAsync(Sql.Rental_Create, parameters);
             }
         }
         public async Task<IEnumerable<DataModels.Rental.Rental?>> GetAllAsync() {
@@ -40,16 +38,38 @@ namespace AutoLend.Data.Repositories.Rental {
                 return await connection.QueryFirstOrDefaultAsync<DataModels.Rental.Rental>(Sql.Rental_GetById, new { rentalId });
             }
         }
-        public async Task UpdateAsync( DataModels.Rental.Rental rental ) {
+        public async Task UpdateAsync( RentalUpdateDTO rental ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
-                await connection.ExecuteAsync(Sql.Rental_Update, new { rental });
+
+                var parameters = new {
+                    rental.StatusId,
+                    rental.RentalDate,
+                    rental.ReturnDate,
+                    rental.Cost,
+                };
+
+                await connection.ExecuteAsync(Sql.Rental_Update, parameters);
             }
         }
         public async Task DeleteAsync( int rentalId ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
                 await connection.ExecuteAsync(Sql.Rental_Delete, new { rentalId });
+            }
+        }
+
+        public async Task UpdateStatusAsync( int rentalId, int statusId ) {
+            using (SqlConnection connection = new(_connectionString)) {
+                await connection.OpenAsync();
+                await connection.ExecuteAsync(Sql.Rental_UpdateStatusAsync, new { rentalId, statusId });
+            }
+        }
+
+        public async Task<IEnumerable<DataModels.Rental.Rental?>> GetItemsWithPastReturnDateAsync() {
+            using (SqlConnection connection = new(_connectionString)) {
+                await connection.OpenAsync();
+                return await connection.QueryAsync<DataModels.Rental.Rental>(Sql.Rental_GetItemsWithPastReturnDateAsync);
             }
         }
     }

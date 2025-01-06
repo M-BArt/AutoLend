@@ -1,21 +1,16 @@
 ﻿using AutoLend.Core.ApiModels.Customer;
 using AutoLend.Core.Esceptions;
-using AutoLend.Data.DataModels.Customer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 
-namespace AutoLend.API.Controllers.CustomerController
-{
-    public partial class CustomerController
-    {
+namespace AutoLend.API.Controllers.CustomerController {
+    public partial class CustomerController {
         /// <summary>
         /// Endpoint to create a new customer in the system.
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Create([FromBody] CustomerCreateRequest customer)
-        {
+        public async Task<IActionResult> Create( [FromBody] CustomerCreateRequest customer ) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

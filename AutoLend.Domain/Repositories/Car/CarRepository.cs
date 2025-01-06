@@ -4,6 +4,7 @@ using AutoLend.Data.Resources.Car;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Transactions;
 
 
 namespace AutoLend.Data.Repositories.Car.Car {
@@ -13,7 +14,7 @@ namespace AutoLend.Data.Repositories.Car.Car {
         public CarRepository( IConfiguration configuration ) {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string not provided");
         }
-        public async Task CreateAsync( CarCreateDTO car ) {
+        public async Task<int> CreateAsync( CarCreateDTO car ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
 
@@ -24,7 +25,7 @@ namespace AutoLend.Data.Repositories.Car.Car {
                     car.IsAvailable
                 };
 
-                await connection.ExecuteAsync(Sql.Car_Create, parameters);
+                return await connection.ExecuteAsync(Sql.Car_Create, parameters);
             }
         }
         public async Task<IEnumerable<DataModels.Car.Car?>> GetAllAsync() {
@@ -58,7 +59,10 @@ namespace AutoLend.Data.Repositories.Car.Car {
         public async Task DeleteAsync( int carId ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
-                await connection.ExecuteAsync(Sql.Car_Delete, new { carId });
+                using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) {
+                    await connection.ExecuteAsync(Sql.Car_Delete, new { carId });
+                    transaction.Complete();
+                }
             }
         }
         public async Task<IEnumerable<CarSearch?>> SearchAsync( CarSearchDTO car ) {
@@ -77,13 +81,13 @@ namespace AutoLend.Data.Repositories.Car.Car {
                 return await connection.QueryAsync<CarSearch>(Sql.Car_Search, parameters);
             }
         }
-        public async Task<CarGetByLicensePlate?> GetByLicensePlateAsync(string LicensePlate ) {
+        public async Task<CarGetByLicensePlate?> GetByLicensePlateAsync( string LicensePlate ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
-                return await connection.QueryFirstOrDefaultAsync<CarGetByLicensePlate>(Sql.Car_GetByLicensePlate, new {LicensePlate});
+                return await connection.QueryFirstOrDefaultAsync<CarGetByLicensePlate>(Sql.Car_GetByLicensePlate, new { LicensePlate });
             }
         }
-        public async Task<bool> LicensePlateExistsAsync( string LicensePlate , int? excludeCarId = null) {
+        public async Task<bool> LicensePlateExistsAsync( string LicensePlate, int? excludeCarId = null ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
                 return await connection.QueryFirstOrDefaultAsync<bool>(Sql.Car_LicensePlateExistsAsync, new { LicensePlate, excludeCarId });

@@ -62,6 +62,8 @@ namespace AutoLend.Data.Resources.Car {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu INSERT INTO [dbo].[Cars] (
+        ///    [CreateDate],
+        ///    [ModifyDate],
         ///    [ModelId],
         ///    [Year],
         ///    [LicensePlate],
@@ -69,13 +71,15 @@ namespace AutoLend.Data.Resources.Car {
         ///    [IsActive]
         ///) 
         ///VALUES (
+        ///    GETDATE(),
+        ///    NULL,
         ///    @ModelId,
         ///    @Year,
         ///    @LicensePlate,
         ///    @IsAvailable,
         ///    1
         ///)
-        ///.
+        ///SELECT Scope_Identity().
         /// </summary>
         public static string Car_Create {
             get {
@@ -91,7 +95,15 @@ namespace AutoLend.Data.Resources.Car {
         ///	[dbo].[Cars] AS [CA]
         ///WHERE 
         ///	[CA].[Id] = @carId 
-        ///AND [IsActive] = 1;.
+        ///AND [IsActive] = 1;
+        ///
+        ///UPDATE 
+        ///	[R]
+        ///SET
+        ///	[R].[StatusId] = 2
+        ///WHERE
+        ///	[CA].[Id] = @carId
+        ///AND [R].[IsActive] = 1.
         /// </summary>
         public static string Car_Delete {
             get {
@@ -170,11 +182,11 @@ namespace AutoLend.Data.Resources.Car {
         ///	WHEN EXISTS(
         ///	SELECT 1 
         ///	FROM 
-        ///	dbo.Cars AS CA 
+        ///	[dbo].[Cars] AS [CA] 
         ///	WHERE 
-        ///		CA.IsActive = 1
-        ///	AND	CA.LicensePlate = @LicensePlate
-        ///	AND (@excludeCarId IS NULL OR CA.Id != @excludeCarId)
+        ///		[CA].[IsActive] = 1
+        ///	AND	[CA].[LicensePlate] = @LicensePlate
+        ///	AND (@excludeCarId IS NULL OR [CA].[Id] != @excludeCarId)
         ///	)
         ///	THEN 1
         ///	ELSE 0
@@ -222,10 +234,11 @@ namespace AutoLend.Data.Resources.Car {
         ///		[CA].[ModelId]		= COALESCE((SELECT [id] FROM [dbo].[Models] WHERE [Models].[ModelName] LIKE &apos;%&apos; + NULLIF(@ModelName, &apos;&apos;) + &apos;%&apos;), [CA].[ModelId]),
         ///		[CA].[LicensePlate]	= COALESCE(NULLIF(@LicensePlate, &apos;&apos;), [CA].[LicensePlate]),
         ///		[CA].[IsAvailable]	= COALESCE(@IsAvailable, [CA].[IsAvailable]),
-        ///		[CA].[Cost]			= COALESCE(NULLIF(@Cost, 0), [CA].Cost)
+        ///		[CA].[Cost]			= COALESCE(NULLIF(@Cost, 0), [CA].Cost),
+        ///		[CA].[ModifyDate]	= GETDATE()
         ///	
         ///	FROM [dbo].[Cars]				AS [CA] 
-        ///		INNER JOIN [dbo].[Models]	AS [M]	ON [CA [obcięto pozostałą część ciągu]&quot;;.
+        ///		INNER [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         public static string Car_Update {
             get {

@@ -17,6 +17,7 @@ AND [dbo].[Reservation].[IsActive] = 1;
 
 UPDATE [dbo].[Cars]
 SET
+	[ModifyDate] = GETDATE(),
 	[IsAvailable] = 1
 WHERE
 	[Car].[Id] = (SELECT [Car].[Id] FROM [dbo].[Rentals] WHERE [CustomerId] = @customerId AND [IsActive] = 1)
@@ -27,3 +28,5 @@ SET
 	[IsActive] = 0
 WHERE 
 	[dbo].[Rentals].[CustomerId] = @customerId
+AND ([StatusId] = 3 
+	OR [StatusId] = 2)

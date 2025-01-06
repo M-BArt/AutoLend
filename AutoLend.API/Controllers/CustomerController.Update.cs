@@ -1,7 +1,6 @@
 ﻿using AutoLend.Core.ApiModels.Customer;
 using AutoLend.Core.Esceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 
 namespace AutoLend.API.Controllers.CustomerController {
     public partial class CustomerController {

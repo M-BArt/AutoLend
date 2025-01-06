@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoLend.Data.CoreModels.Reservation {
+﻿namespace AutoLend.Data.CoreModels.Reservation {
     public class ReservationCreateDTO {
         public required DateTime ReservationFrom { get; set; }
         public required DateTime ReservationTo { get; set; }

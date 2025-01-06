@@ -62,13 +62,13 @@ namespace AutoLend.Data.Resources.Model {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT
-        ///	MO.Id,
-        ///	MO.ModelName,
-        ///	MO.BrandId
+        ///	[MO].[Id],
+        ///	[MO].[ModelName],
+        ///	[MO].[BrandId]
         ///FROM 
-        ///	dbo.Models AS MO
+        ///	[dbo].[Models] AS [MO]
         ///WHERE 
-        ///	MO.ModelName = @ModelName.
+        ///	[MO].[ModelName] = @ModelName.
         /// </summary>
         internal static string Model_GetByModelName {
             get {

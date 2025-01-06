@@ -1,10 +1,9 @@
-﻿using System.Data;
-
-namespace AutoLend.Data.DataModels.Rental {
+﻿namespace AutoLend.Data.DataModels.Rental {
     public class Rental {
-        public required int? Id { get; set; }
-		public required DateTime CreateDate { get; set; }
+        public required int Id { get; set; }
+        public required DateTime CreateDate { get; set; }
         public required DateTime ModifyDate { get; set; }
+        public required int CarId { get; set; }
         public required string LicensePlate { get; set; }
         public required string ModelName { get; set; }
         public required string BrandName { get; set; }

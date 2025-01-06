@@ -1,8 +1,8 @@
 ﻿SELECT
-	MO.Id,
-	MO.ModelName,
-	MO.BrandId
+	[MO].[Id],
+	[MO].[ModelName],
+	[MO].[BrandId]
 FROM 
-	dbo.Models AS MO
+	[dbo].[Models] AS [MO]
 WHERE 
-	MO.ModelName = @ModelName
+	[MO].[ModelName] = @ModelName

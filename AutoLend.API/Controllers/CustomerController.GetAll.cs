@@ -1,17 +1,14 @@
 ﻿using AutoLend.Core.Esceptions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AutoLend.API.Controllers.CustomerController
-{
-    public partial class CustomerController
-    {
+namespace AutoLend.API.Controllers.CustomerController {
+    public partial class CustomerController {
         /// <summary>
         /// Endpoint to take all customers from the system.
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public async Task<IActionResult> GetAll()
-        {
+        public async Task<IActionResult> GetAll() {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

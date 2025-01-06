@@ -1,12 +1,9 @@
 ﻿using AutoLend.Core.ApiModels.Reservation;
 using AutoLend.Core.Esceptions;
-using AutoLend.Data.DataModels.Reservation;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AutoLend.API.Controllers
-{
-    public partial class ReservationController
-    {
+namespace AutoLend.API.Controllers {
+    public partial class ReservationController {
 
         /// <summary>
         /// Endpoint to create a new reservation.
@@ -14,8 +11,7 @@ namespace AutoLend.API.Controllers
         /// <param name="reservation"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IActionResult> Create([FromBody] ReservationCreateRequest reservation)
-        {
+        public async Task<IActionResult> Create( [FromBody] ReservationCreateRequest reservation ) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

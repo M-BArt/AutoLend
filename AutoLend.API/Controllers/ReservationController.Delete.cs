@@ -1,19 +1,15 @@
 ﻿using AutoLend.Core.Esceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 
-namespace AutoLend.API.Controllers
-{
-    public partial class ReservationController
-    {
+namespace AutoLend.API.Controllers {
+    public partial class ReservationController {
         /// <summary>
         /// Endpoint to delete an existing reservation by its ID.
         /// </summary>
         /// <param name="reservationId"></param>
         /// <returns></returns>
         [HttpDelete("{reservationId}")]
-        public async Task<IActionResult> Delete([FromRoute] int reservationId)
-        {
+        public async Task<IActionResult> Delete( [FromRoute] int reservationId ) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

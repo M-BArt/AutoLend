@@ -1,19 +1,15 @@
 ﻿using AutoLend.Core.Esceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 
-namespace AutoLend.API.Controllers.CustomerController
-{
-    public partial class CustomerController
-    {
+namespace AutoLend.API.Controllers.CustomerController {
+    public partial class CustomerController {
         /// <summary>
         /// Endpoint to Delete an existing customer by their ID.
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
         [HttpDelete("{customerId}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid customerId)
-        {
+        public async Task<IActionResult> Delete( [FromRoute] Guid customerId ) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

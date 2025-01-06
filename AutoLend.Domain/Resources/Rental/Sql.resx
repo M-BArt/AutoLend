@@ -130,7 +130,13 @@
   <data name="Rental_GetById" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Rental_GetById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Rental_GetItemsWithPastReturnDateAsync" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Rental_GetItemsWithPastReturnDateAsync.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Rental_Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Rental_Update.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Rental_UpdateStatusAsync" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Rental_UpdateStatusAsync.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

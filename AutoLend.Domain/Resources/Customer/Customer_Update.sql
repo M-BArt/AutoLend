@@ -9,7 +9,7 @@
 	FROM 
 		[dbo].[Customers] AS [CU]
 	WHERE 
-		[CU].[Id] = @Id 
+		[CU].[Id] = @Id
 	AND [IsActive] = 1;
 
 IF @DateOfBirth IS NOT NULL
@@ -18,7 +18,7 @@ IF @DateOfBirth IS NOT NULL
         SET 
 			[DateOfBirth] = @DateOfBirth
         WHERE 
-			[Id] = @Id 
+			[Id] = @Id
 		AND [IsActive] = 1;
     END
 	

@@ -1,11 +1,13 @@
-﻿SELECT 
+﻿-- File: Reservation_GetAll.sql
+
+SELECT 
 	[R].[Id], 
 	[R].[CreateDate], 
 	[R].[ModifyDate], 
 	[R].[ReservationFrom], 
 	[R].[ReservationTo], 
 	[R].[Description], 
-	[S].[StatusName,
+	[S].[StatusName],
 	[B].[BrandName], 
 	[M].[ModelName], 
 	[CA].[LicensePlate], 
@@ -26,4 +28,4 @@ AND [CA].[IsActive] = 1
 AND [M].[IsActive] = 1
 AND [B].[IsActive] = 1
 AND [S].[IsActive] = 1
-AND [CU.[IsActive] = 1;
+AND [CU].[IsActive] = 1;

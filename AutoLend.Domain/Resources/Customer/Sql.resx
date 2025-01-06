@@ -130,6 +130,9 @@
   <data name="Customer_GetById" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Customer_GetById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Customer_GetByLicenseNumber" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Customer_GetByLicenseNumber.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Customer_IsCustomerFieldUnique" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Customer_IsCustomerFieldUnique.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

@@ -7,6 +7,7 @@ namespace AutoLend.Core.ApiModels.Car {
         [RegularExpression(@"(^$|^[A-Z]{3}-\d{4}$)", ErrorMessage = "License plate must be in the format CCC-NNNN.")]
         public string? LicensePlate { get; set; } = string.Empty;
         public bool? IsAvailable { get; set; }
+        [Range(10, double.MaxValue, ErrorMessage = "Cost must be a positive value.")]
         public decimal? Cost { get; set; }
     }
 }

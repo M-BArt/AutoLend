@@ -61,12 +61,7 @@ namespace AutoLend.Data.Resources.Customer {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF EXISTS (SELECT 1 FROM dbo.Customers WHERE Email = @Email AND dbo.Customers.IsActive = 1)
-        ///BEGIN RAISERROR (&apos;Customer already exists in the database.&apos;,16, 1) END
-        ///ELSE
-        ///
-        ///BEGIN
-        ///INSERT INTO dbo.Customers 
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu INSERT INTO dbo.Customers 
         ///	(
         ///	[Id],
         ///	[CreateDate],
@@ -91,7 +86,9 @@ namespace AutoLend.Data.Resources.Customer {
         ///	@Address,
         ///	@LicenseNumber,
         ///	@DateOfBirth,
-        /// [obcięto pozostałą część ciągu]&quot;;.
+        ///	1
+        ///	)
+        ///SELECT Scope_Identity().
         /// </summary>
         internal static string Customer_Create {
             get {
@@ -100,28 +97,29 @@ namespace AutoLend.Data.Resources.Customer {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
-        ///(EXISTS (SELECT 1 FROM dbo.Customers WHERE Id = @customerId AND IsActive = 0)) 
-        ///OR (NOT EXISTS (SELECT 1 FROM dbo.Customers WHERE Id = @customerId AND IsActive = 1)) 
-        ///BEGIN RAISERROR (&apos;Customer not found or is not active.&apos;,16, 1) END
-        ///ELSE
-        ///
-        ///UPDATE dbo.Customers
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE [dbo].[Customers]
         ///SET 
-        ///	IsActive = 0, 
-        ///	ModifyDate = GETDATE()
+        ///	[IsActive] = 0, 
+        ///	[ModifyDate] = GETDATE()
         ///WHERE 
-        ///	Id = @customerId 
-        ///AND IsActive = 1;
+        ///	[Id] = @customerId 
+        ///AND [IsActive] = 1;
         ///
-        ///UPDATE dbo.Reservations
+        ///UPDATE [dbo].[Reservations]
         ///SET 
-        ///	ModifyDate = GETDATE(),
-        ///	StatusId = 2,
-        ///	IsActive = 0
+        ///	[ModifyDate] = GETDATE(),
+        ///	[StatusId] = 2,
+        ///	[IsActive] = 0
         ///WHERE 
-        ///	dbo.Reservation.CustomerId = @customerId
-        ///AND  [obcięto pozostałą część ciągu]&quot;;.
+        ///	[dbo].[Reservation].[CustomerId] = @customerId
+        ///AND [dbo].[Reservation].[IsActive] = 1;
+        ///
+        ///UPDATE [dbo].[Cars]
+        ///SET
+        ///	[ModifyDate] = GETDATE(),
+        ///	[IsAvailable] = 1
+        ///WHERE
+        ///	[Car].[Id] = (SELECT [Car].[Id] FROM [dbo].[Rentals] WHERE [CustomerId] = @customerId AND [IsActive]  [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Customer_Delete {
             get {
@@ -131,21 +129,21 @@ namespace AutoLend.Data.Resources.Customer {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT 
-        ///	CU.Id, 
-        ///	CU.CreateDate, 
-        ///	CU.ModifyDate, 
-        ///	CU.FirstName, 
-        ///	CU.LastName, 
-        ///	CU.Email, 
-        ///	CU.LicenseNumber, 
-        ///	CU.Phone, 
-        ///	CU.DateofBirth, 
-        ///	CU.HasActiveRental,
-        ///	CU.Address 
+        ///	[CU].[Id], 
+        ///	[CU].[CreateDate], 
+        ///	[CU].[ModifyDate], 
+        ///	[CU].[FirstName], 
+        ///	[CU].[LastName], 
+        ///	[CU].[Email], 
+        ///	[CU].[LicenseNumber], 
+        ///	[CU].[Phone], 
+        ///	[CU].[DateofBirth], 
+        ///	[CU].[HasActiveRental],
+        ///	[CU].[Address]
         ///FROM 
-        ///	dbo.Customers AS CU
+        ///	[dbo].[Customers] AS [CU]
         ///WHERE
-        ///	CU.IsActive = 1;.
+        ///	[CU].[IsActive] = 1;.
         /// </summary>
         internal static string Customer_GetAll {
             get {
@@ -154,24 +152,49 @@ namespace AutoLend.Data.Resources.Customer {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
-        ///(EXISTS (SELECT 1 FROM dbo.Customers WHERE Id = @customerId AND IsActive = 0)) 
-        ///OR (NOT EXISTS (SELECT 1 FROM dbo.Customers WHERE Id = @customerId AND IsActive = 1)) 
-        ///BEGIN RAISERROR (&apos;Customer not found or is not active.&apos;,16, 1) END
-        ///ELSE
-        ///
-        ///SELECT  
-        ///	* 
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT  
+        ///    [CU].[Id],
+        ///    [CU].[CreateDate],
+        ///    [CU].[ModifyDate],
+        ///    [CU].[FirstName],
+        ///    [CU].[LastName],
+        ///    [CU].[Email],
+        ///    [CU].[LicenseNumber],
+        ///    [CU].[Phone],
+        ///    [CU].[Address],
+        ///    [CU].[DateOfBirth],
+        ///    [CU].[HasActiveRental],
+        ///    [CU].[Cost]
         ///FROM 
-        ///	dbo.Customers AS CU
+        ///	[dbo].[Customers] AS [CU]
         ///WHERE 
-        ///	CU.id = @customerId
-        ///AND	CU.IsActive = 1;
+        ///	[CU].[Id] = @customerId
+        ///AND	[CU].[IsActive] = 1;
         ///.
         /// </summary>
         internal static string Customer_GetById {
             get {
                 return ResourceManager.GetString("Customer_GetById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT 
+        ///	[CU].[Id],
+        ///	[CU].[LicenseNumber],
+        ///	[CU].[FirstName],
+        ///	[CU].[LastName],
+        ///	[CU].[Email],
+        ///	[CU].[HasActiveRental]
+        ///FROM 
+        ///	[dbo].[Customers] AS [CU]
+        ///WHERE
+        ///	[LicenseNumber] = @licenseNumber
+        ///AND [IsActive] = 1.
+        /// </summary>
+        internal static string Customer_GetByLicenseNumber {
+            get {
+                return ResourceManager.GetString("Customer_GetByLicenseNumber", resourceCulture);
             }
         }
         
@@ -182,7 +205,7 @@ namespace AutoLend.Data.Resources.Customer {
         ///            WHEN EXISTS (
         ///                SELECT 1
         ///                FROM [dbo].[Customers]
-        ///                WHERE Email = @Value
+        ///                WHERE [Email] = @Value
         ///                AND (@ExcludeCustomerId IS NULL OR Id != @ExcludeCustomerId)
         ///            )
         ///            THEN 1
@@ -195,7 +218,7 @@ namespace AutoLend.Data.Resources.Customer {
         ///            WHEN EXISTS (
         ///                SELECT 1
         ///                FROM [dbo].[Customers]
-        ///                WH [obcięto pozostałą część ciągu]&quot;;.
+        ///                 [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Customer_IsCustomerFieldUnique {
             get {
@@ -204,18 +227,21 @@ namespace AutoLend.Data.Resources.Customer {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF 
-        ///	(EXISTS (SELECT 1 FROM dbo.Customers WHERE Id = @Id AND IsActive = 0)) 
-        ///	OR (NOT EXISTS (SELECT 1 FROM dbo.Customers WHERE Id = @Id)) 
-        ///	BEGIN RAISERROR (&apos;Customer not found or is not active.&apos;,16, 1) END
-        ///ELSE
-        ///UPDATE CU
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE CU
         ///	SET 
-        ///		CU.FirstName = COALESCE(NULLIF(@FirstName, &apos;&apos;), C.FirstName),
-        ///		CU.LastName = COALESCE(NULLIF(@LastName, &apos;&apos;), C.LastName),
-        ///		CU.LicenseNumber = COALESCE(NULLIF(@LicenseNumber, &apos;&apos;), C.LicenseNumber),
-        ///		CU.Phone = COALESCE(NULLIF(@Phone, &apos;&apos;), C.Phone),
-        ///		CU.Address = COAL [obcięto pozostałą część ciągu]&quot;;.
+        ///		[CU].[FirstName]		= COALESCE(NULLIF(@FirstName, &apos;&apos;), C.FirstName),
+        ///		[CU].[LastName]			= COALESCE(NULLIF(@LastName, &apos;&apos;), C.LastName),
+        ///		[CU].[LicenseNumber]	= COALESCE(NULLIF(@LicenseNumber, &apos;&apos;), C.LicenseNumber),
+        ///		[CU].[Phone]			= COALESCE(NULLIF(@Phone, &apos;&apos;), C.Phone),
+        ///		[CU].[Address]			= COALESCE(NULLIF(@Address, &apos;&apos;), C.Address),
+        ///		[CU].[ModifyDate]		= GETDATE()
+        ///	FROM 
+        ///		[dbo].[Customers] AS [CU]
+        ///	WHERE 
+        ///		[CU].[Id] = @Id
+        ///	AND [IsActive] = 1;
+        ///
+        ///IF @DateOfBirth IS NOT NULL        /// [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Customer_Update {
             get {

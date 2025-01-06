@@ -8,8 +8,10 @@ namespace AutoLend.Core.ApiModels.Car {
         [Required(ErrorMessage = "Year value is required.")]
         public required int Year { get; set; }
         [Required(ErrorMessage = "License plate is required.")]
+        [RegularExpression(@"(^$|^[A-Z]{3}-\d{4}$)", ErrorMessage = "License plate must be in the format CCC-NNNN.")]
         public required string LicensePlate { get; set; } = string.Empty;
         public bool IsAvailable { get; set; }
+        [Range(10, double.MaxValue, ErrorMessage = "Cost must be a positive value.")]
         public required decimal Cost { get; set; }
     }
 }

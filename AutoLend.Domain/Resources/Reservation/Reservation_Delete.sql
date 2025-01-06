@@ -1,8 +1,8 @@
 ﻿UPDATE 
 	[dbo].[Reservations]
 SET 
-	[IsActive] = 0,
-	[ModifyDate] = GETDATE()
+	[ModifyDate] = GETDATE(),
+	[IsActive] = 0
 WHERE 
 	[Id] = @reservationId 
 AND [IsActive] = 1;

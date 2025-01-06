@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoLend.Data.CoreModels.Rental {
+﻿namespace AutoLend.Data.CoreModels.Rental {
     public class RentalUpdateDTO {
+        public int? StatusId { get; set; }
+        public DateTime? RentalDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
+        public decimal? Cost { get; set; }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using AutoLend.Core.Esceptions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AutoLend.API.Controllers
-{
-    public partial class RentalController
-    {
+namespace AutoLend.API.Controllers {
+    public partial class RentalController {
 
         /// <summary>
         /// Endpoint to delete an existing rental.
@@ -12,8 +10,7 @@ namespace AutoLend.API.Controllers
         /// <param name="rentalId"></param>
         /// <returns></returns>
         [HttpDelete("{rentalId}")]
-        public async Task<IActionResult> Delete([FromRoute] int rentalId)
-        {
+        public async Task<IActionResult> Delete( [FromRoute] int rentalId ) {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

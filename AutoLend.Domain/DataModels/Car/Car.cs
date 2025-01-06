@@ -5,6 +5,7 @@
         public required string BrandName { get; set; }
         public required int Year { get; set; }
         public required string LicensePlate { get; set; }
-        public bool IsAvailable { get; set; }
+        public required bool IsAvailable { get; set; }
+        public required decimal Cost { get; set; }
     }
 }

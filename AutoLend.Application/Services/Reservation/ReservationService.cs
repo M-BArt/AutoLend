@@ -31,7 +31,7 @@ namespace AutoLend.Core.Services.Reservation {
                 FirstName = reservation.FirstName,
                 LastName = reservation.LastName,
                 Email = reservation.Email,
-                LicensePlate = reservation.LicensePlate,
+                LicensePlate = reservation.LicensePlate
             };
 
             await _reservationRepository.CreateAsync(ReservationDto);

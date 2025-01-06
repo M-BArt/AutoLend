@@ -13,6 +13,7 @@ namespace AutoLend.Core.ApiModels.Reservation {
         [EmailAddress(ErrorMessage = "Invalid Email address")]
         public required string Email { get; set; }
         [Required(ErrorMessage = "License plate  is required.")]
+        [RegularExpression(@"(^$|^[A-Z]{3}-\d{4}$)", ErrorMessage = "License plate must be in the format CCC-NNNN.")]
         public required string LicensePlate { get; set; }
 
     }
