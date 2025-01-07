@@ -34,6 +34,7 @@ namespace AutoLend.Core.Services.Car {
                 Year = car.Year,
                 LicensePlate = car.LicensePlate,
                 IsAvailable = car.IsAvailable,
+                Cost = car.Cost,
             };
 
             await _carRepository.CreateAsync(CarDto);
@@ -43,7 +44,7 @@ namespace AutoLend.Core.Services.Car {
             if (await _carRepository.GetByIdAsync(carId) is null)
                 throw new BusinessException("Car not found or is not active.");
 
-            if (!((await _rentalRepository.GetAllAsync()).Where(x => x != null && x.CarId == carId && x.StatusName == "Confirmed").Any()))
+            if ((await _rentalRepository.GetAllAsync()).Where(x => x != null && x.CarId == carId && x.StatusName == "Confirmed").Any())
                 throw new BusinessException("Cannot remove car is active rental.");
                 
             await _carRepository.DeleteAsync(carId);

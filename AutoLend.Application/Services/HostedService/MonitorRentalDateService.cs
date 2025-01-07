@@ -1,4 +1,5 @@
-﻿using AutoLend.Data.Repositories.Rental;
+﻿using AutoLend.Core.Esceptions;
+using AutoLend.Data.Repositories.Rental;
 using AutoLend.Data.Repositories.Reservation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,12 +16,13 @@ namespace AutoLend.Core.Services.HostedService {
 
             using IServiceScope? scope = _services.CreateScope();
 
-            IRentalRepository? _rentalRepository = scope.ServiceProvider.GetService<IRentalRepository>();
-            IReservationRepository? _reservationRepository = scope.ServiceProvider.GetService<IReservationRepository>();
+            IRentalRepository _rentalRepository = scope.ServiceProvider.GetService<IRentalRepository>() ?? throw new BusinessException("Rental Repository not found");
+            IReservationRepository _reservationRepository = scope.ServiceProvider.GetService<IReservationRepository>() ?? throw new BusinessException("Rental Repository not found");
+            ;
 
             while (!stoppingToken.IsCancellationRequested) {
 
-                var items = await _rentalRepository?.GetItemsWithPastReturnDateAsync();
+                var items = await _rentalRepository.GetItemsWithPastReturnDateAsync();
 
                 foreach (var item in items) {
                     await _rentalRepository.UpdateStatusAsync(item!.Id, 4);

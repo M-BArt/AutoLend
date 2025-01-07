@@ -25,11 +25,15 @@ namespace AutoLend.Core.Services.Rental {
 
             var customer = await _customerRepository.GetByLicenseNumber(rental.LicenseNumber) ?? throw new BusinessException("Customer not found");
 
-            if (!customer.HasActiveRental)
+            if (customer.HasActiveRental)
                 throw new BusinessException("Customer already has car on rental.");
 
             var car = await _carRepository.GetByLicensePlateAsync(rental.LicensePlate) ?? throw new BusinessException("No found car with the given license plates");
 
+            if (!car.IsAvailable)
+                throw new BusinessException("Car is not available.");
+                  
+            
             var TotalCost = (rental.ReturnDate - rental.RentalDate).Days * car.Cost;
 
             RentalCreateDTO rentalDto = new() {
@@ -43,9 +47,7 @@ namespace AutoLend.Core.Services.Rental {
             await _rentalRepository.CreateAsync(rentalDto);
         }
         public async Task DeleteRental( int rentalId ) {
-
-            /* Aktualizacja 'HasActiveRental' dla customer przy usunięciu 'Rental' */
-
+           
             await _rentalRepository.DeleteAsync(rentalId);
         }
         public async Task<Data.DataModels.Rental.Rental?> GetRentalById( int rentalId ) {
@@ -63,16 +65,17 @@ namespace AutoLend.Core.Services.Rental {
                 var rentalDate = rental.RentalDate ?? oldRental.RentalDate.Date;
                 var returnDate = rental.ReturnDate ?? oldRental.ReturnDate.Date;
 
-                var TotalCost = (rentalDate - returnDate).Days * car.Cost;
+                var TotalCost = (returnDate - rentalDate).Days * car.Cost;
 
             if ((returnDate - rentalDate).Days > 14)
                 throw new BusinessException("Rental period too long");
 
             RentalUpdateDTO rentalDto = new() {
+                RentalId = rentalId,
                 StatusId = rental.StatusId,
                 RentalDate = rental.RentalDate,
                 ReturnDate = rental.ReturnDate,
-                Cost = TotalCost,
+                TotalCost = TotalCost,
             };
 
             await _rentalRepository.UpdateAsync(rentalDto); 

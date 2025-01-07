@@ -103,12 +103,14 @@ namespace AutoLend.Data.Resources.Rental {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE 
-        ///	[dbo].[Rentals]
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE [RE]
+        ///
         ///SET 
         ///	[IsActive] = 0 
+        ///FROM
+        ///	[dbo].[Rentals] AS [RE]
         ///WHERE 
-        ///	[Id] = @rentalId 
+        ///	[RE].[Id] = @rentalId 
         ///AND [IsActive] = 1
         ///AND [StatusId] != 1;
         ///
@@ -119,8 +121,9 @@ namespace AutoLend.Data.Resources.Rental {
         ///FROM 
         ///	[dbo].[Customers] AS [CU]
         ///WHERE 
-        ///	[CU].[Id] = @customerId
+        ///	[CU].[Id] = (SELECT [RE].[CustomerId] FROM [dbo.Rentals] AS [RE] WHERE [RE].Id = @rentalId)
         ///AND [CU].[IsActive] = 1
+        ///
         ///.
         /// </summary>
         internal static string Rental_Delete {
@@ -134,10 +137,11 @@ namespace AutoLend.Data.Resources.Rental {
         ///	[RE].[Id],
         ///	[RE].[CreateDate],
         ///	[RE].[ModifyDate],
-        ///	[CA].[CarId],
+        ///	[RE].[CarId],
         ///	[CA].[LicensePlate],
         ///	[M].[ModelName],
         ///	[B].[BrandName],
+        ///	[RE].[CustomerId],
         ///	[CU].[FirstName],
         ///	[CU].[LastName],
         ///	[CU].[LicenseNumber],
@@ -146,10 +150,10 @@ namespace AutoLend.Data.Resources.Rental {
         ///	[S].[StatusName],
         ///	[RE].[TotalCost]
         ///
-        ///FROM dbo.Rentals					AS [RE]
-        ///	INNER JOIN [dbo].[Cars]			AS [CA]	ON [RE.[CarId] = [CA].[Id]
-        ///	INNER JOIN [dbo].[Customers]	AS [CU]	ON [RE.[CustomerId] = [CU].[Id]
-        ///	INNER JOIN [dbo].[Models]		AS [M]	ON [CA.[ModelId] = [M].[Id] [obcięto pozostałą część ciągu]&quot;;.
+        ///FROM [dbo].[Rentals]				AS [RE]
+        ///	INNER JOIN [dbo].[Cars]			AS [CA]	ON [RE].[CarId] = [CA].[Id]
+        ///	INNER JOIN [dbo].[Customers]	AS [CU]	ON [RE].[CustomerId] = [CU].[Id]
+        ///	INNER JOIN [dbo].[Models]		AS [M]	O [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Rental_GetAll {
             get {
@@ -162,6 +166,7 @@ namespace AutoLend.Data.Resources.Rental {
         ///	[RE].[Id],
         ///	[RE].[CreateDate],
         ///	[RE].[ModifyDate],
+        ///	[RE].[CarId],
         ///	[CA].[LicensePlate],
         ///	[M].[ModelName],
         ///	[B].[BrandName],
@@ -173,11 +178,10 @@ namespace AutoLend.Data.Resources.Rental {
         ///	[S].[StatusName],
         ///	[RE].[TotalCost]
         ///
-        ///FROM dbo.Rentals					AS [RE]
+        ///FROM [dbo].[Rentals]				AS [RE]
         ///	INNER JOIN [dbo].[Cars]			AS [CA]	ON [RE].[CarId] = [CA].[Id]
         ///	INNER JOIN [dbo].[Customers]	AS [CU]	ON [RE].[CustomerId] = [CU].[Id]
-        ///	INNER JOIN [dbo].[Models]		AS [M]	ON [CA].[ModelId] = [M].[Id]
-        ///	INNER JOIN [obcięto pozostałą część ciągu]&quot;;.
+        ///	INNER JOIN [dbo].[Models]		AS [M]	ON [CA].[ModelId] = [M [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Rental_GetById {
             get {
@@ -206,11 +210,11 @@ namespace AutoLend.Data.Resources.Rental {
         ///		[RE].[StatusId]		= COALESCE(	NULLIF(@StatusId, &apos;&apos;),		[RE].[StatusId]),
         ///		[RE].[RentalDate]	= COALESCE(	NULLIF(@RentalDate, &apos;&apos;),	[RE].[RentalDate]),
         ///		[RE].[ReturnDate]	= COALESCE(	NULLIF(@ReturnDate, &apos;&apos;),	[RE].[ReturnDate]),
-        ///		[RE].[Cost]			= COALESCE(	NULLIF(@Cost, &apos;&apos;),			[RE].[Cost])
+        ///		[RE].[TotalCost]	= @TotalCost
         ///	FROM 
         ///		[dbo].[Rentals] AS [RE]
         ///	WHERE 
-        ///		[RE].[Id] = @Id
+        ///		[RE].[Id] = @RentalId
         ///	AND [RE].[IsActive] = 1;
         ///
         ///.

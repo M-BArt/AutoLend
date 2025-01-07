@@ -2,6 +2,7 @@
 	[RE].[Id],
 	[RE].[CreateDate],
 	[RE].[ModifyDate],
+	[RE].[CarId],
 	[CA].[LicensePlate],
 	[M].[ModelName],
 	[B].[BrandName],
@@ -13,7 +14,7 @@
 	[S].[StatusName],
 	[RE].[TotalCost]
 
-FROM dbo.Rentals					AS [RE]
+FROM [dbo].[Rentals]				AS [RE]
 	INNER JOIN [dbo].[Cars]			AS [CA]	ON [RE].[CarId] = [CA].[Id]
 	INNER JOIN [dbo].[Customers]	AS [CU]	ON [RE].[CustomerId] = [CU].[Id]
 	INNER JOIN [dbo].[Models]		AS [M]	ON [CA].[ModelId] = [M].[Id]

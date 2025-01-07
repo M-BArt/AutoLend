@@ -1,6 +1,4 @@
-﻿-- File: Reservation_GetAll.sql
-
-SELECT 
+﻿SELECT 
 	[R].[Id], 
 	[R].[CreateDate], 
 	[R].[ModifyDate], 

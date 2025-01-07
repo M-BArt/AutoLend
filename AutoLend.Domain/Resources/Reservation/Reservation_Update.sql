@@ -2,7 +2,7 @@
 SET 
 	[R].[ReservationFrom] = @ReservationFrom,
 	[R].[ReservationTo] = @ReservationTo,
-	[R].[Descriptions] = @Descriptions
+	[R].[Description] = @Description
 FROM [dbo].[Reservations] AS [R]
 WHERE 
 		[R].[Id] = @Id

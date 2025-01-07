@@ -5,7 +5,8 @@
     [Year],
     [LicensePlate],
     [IsAvailable],
-    [IsActive]
+    [IsActive],
+    [Cost]
 ) 
 VALUES (
     GETDATE(),
@@ -14,6 +15,7 @@ VALUES (
     @Year,
     @LicensePlate,
     @IsAvailable,
-    1
+    1,
+    @Cost
 )
 SELECT Scope_Identity()

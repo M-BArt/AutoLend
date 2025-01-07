@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace AutoLend.Core.ApiModels.Reservation {
-    public class ReservationSearchRequest {
+    public class ReservationSearchRequest : IValidatableObject {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         [EmailAddress(ErrorMessage = "Invalid Email address")]

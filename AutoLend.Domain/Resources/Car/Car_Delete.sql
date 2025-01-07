@@ -7,10 +7,11 @@ WHERE
 	[CA].[Id] = @carId 
 AND [IsActive] = 1;
 
-UPDATE 
-	[R]
+UPDATE [R]
 SET
 	[R].[StatusId] = 2
+FROM
+	[dbo].[Rentals] AS [R]
 WHERE
-	[CA].[Id] = @carId
+	[R].[Id] = @carId
 AND [R].[IsActive] = 1

@@ -79,8 +79,17 @@ namespace AutoLend.Data.Repositories.Customer {
         public async Task<CustomerGetByLicenseNumber?> GetByLicenseNumber( string licenseNumber ) {
             using (SqlConnection connection = new(_connectionString)) {
                 await connection.OpenAsync();
-                return await connection.QueryFirstOrDefaultAsync<CustomerGetByLicenseNumber>(Sql.Customer_IsCustomerFieldUnique, new { licenseNumber });
+                return await connection.QueryFirstOrDefaultAsync<CustomerGetByLicenseNumber>(Sql.Customer_GetByLicenseNumber, new { licenseNumber });
             }
         }
-    }
+
+        public async Task ChangeActiveRental( Guid customerId ) {
+            using (SqlConnection connection = new(_connectionString)) {
+                await connection.OpenAsync();
+                await connection.ExecuteAsync(Sql.Customer_ChangeActiveRental, new { customerId });
+            }
+        }
+
+
+    }   
 }

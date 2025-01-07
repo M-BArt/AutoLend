@@ -4,5 +4,6 @@
         public required int Year { get; set; }
         public required string LicensePlate { get; set; }
         public bool IsAvailable { get; set; }
+        public decimal Cost { get; set; }
     }
 }

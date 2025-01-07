@@ -1,6 +1,7 @@
 ﻿SELECT
-	[CA].Id,
+	[CA].[Id],
 	[CA].[LicensePlate],
+	[CA].[IsAvailable],
 	[CA].[Cost]
 FROM
 	[dbo].[Cars] AS [CA]

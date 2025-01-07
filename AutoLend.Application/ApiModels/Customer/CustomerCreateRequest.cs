@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace AutoLend.Core.ApiModels.Customer {
-    public class CustomerCreateRequest {
+    public class CustomerCreateRequest : IValidatableObject {
 
         [Required(ErrorMessage = "First name is required")]
         [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
@@ -22,5 +22,16 @@ namespace AutoLend.Core.ApiModels.Customer {
         [Required(ErrorMessage = "Address is required")]
         public required string Address { get; set; }
         public DateTime? DateOfBirth { get; set; }
+
+        public IEnumerable<ValidationResult> Validate( ValidationContext validationContext ) {
+
+            if (DateOfBirth > DateTime.Now) {
+
+                yield return new ValidationResult(
+                    $"Date of birth is greater than current date",
+                    new[] { nameof(DateOfBirth) });
+            }
+
+        }
     }
 }

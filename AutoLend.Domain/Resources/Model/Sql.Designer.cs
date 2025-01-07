@@ -68,7 +68,8 @@ namespace AutoLend.Data.Resources.Model {
         ///FROM 
         ///	[dbo].[Models] AS [MO]
         ///WHERE 
-        ///	[MO].[ModelName] = @ModelName.
+        ///	[MO].[ModelName] = @ModelName
+        ///AND	[MO].[IsActive] = 1.
         /// </summary>
         internal static string Model_GetByModelName {
             get {

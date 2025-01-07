@@ -119,9 +119,7 @@ namespace AutoLend.Data.Resources.Reservation {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu -- File: Reservation_GetAll.sql
-        ///
-        ///SELECT 
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT 
         ///	[R].[Id], 
         ///	[R].[CreateDate], 
         ///	[R].[ModifyDate], 
@@ -139,7 +137,8 @@ namespace AutoLend.Data.Resources.Reservation {
         ///FROM [dbo].[Reservations]		AS [R]	
         ///INNER JOIN [dbo].[Status]		AS [S]	ON [R].StatusId = [S].[Id]
         ///INNER JOIN [dbo].[Cars]			AS [CA]	ON [R].CarId = [CA].[Id]
-        ///INNER JOIN [dbo].[Customers]	AS [CU]	ON  [obcięto pozostałą część ciągu]&quot;;.
+        ///INNER JOIN [dbo].[Customers]	AS [CU]	ON [R].CustomerId = [CU].[Id]
+        ///INNER J [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Reservation_GetAll {
             get {
@@ -163,10 +162,10 @@ namespace AutoLend.Data.Resources.Reservation {
         ///    [CU].[LastName], 
         ///    [CU].[Email] 
         ///
-        ///FROM [dbo].[Reservations] AS [R]
-        ///INNER JOIN [dbo].[Status] AS [S] ON [R].StatusId = [S].[Id]
-        ///INNER JOIN [dbo].[Cars] AS [CA] ON [R].CarId = [CA].[Id]
-        ///INNER JOIN [dbo].[Customers] AS [CU] ON [ [obcięto pozostałą część ciągu]&quot;;.
+        ///FROM [dbo].[Reservations]       AS [R]
+        ///INNER JOIN [dbo].[Status]       AS [S]  ON [R].StatusId = [S].[Id]
+        ///INNER JOIN [dbo].[Cars]         AS [CA] ON [R].CarId = [CA].[Id]
+        ///INNER JOIN [dbo].[Cu [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Reservation_GetById {
             get {
@@ -179,7 +178,7 @@ namespace AutoLend.Data.Resources.Reservation {
         ///SET 
         ///	[R].[ReservationFrom] = @ReservationFrom,
         ///	[R].[ReservationTo] = @ReservationTo,
-        ///	[R].[Descriptions] = @Descriptions
+        ///	[R].[Description] = @Description
         ///FROM [dbo].[Reservations] AS [R]
         ///WHERE 
         ///		[R].[Id] = @Id

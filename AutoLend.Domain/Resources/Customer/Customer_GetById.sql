@@ -9,8 +9,7 @@
     [CU].[Phone],
     [CU].[Address],
     [CU].[DateOfBirth],
-    [CU].[HasActiveRental],
-    [CU].[Cost]
+    [CU].[HasActiveRental]
 FROM 
 	[dbo].[Customers] AS [CU]
 WHERE 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace AutoLend.Core.ApiModels.Rental {
-    public class RentalCreateRequest {
+    public class RentalCreateRequest : IValidatableObject {
         [RegularExpression(@"(^$|^[A-Z]{3}-\d{4}$)", ErrorMessage = "License plate must be in the format CCC-NNNN.")]
         public required string LicensePlate { get; set; }
         [RegularExpression(@"(^$|^[A-Z]{2}\d{8}$)", ErrorMessage = "License number must be in the format CCCNNNNNNNN.")]
@@ -10,7 +10,7 @@ namespace AutoLend.Core.ApiModels.Rental {
         public required DateTime ReturnDate { get; set; }
 
         public IEnumerable<ValidationResult> Validate( ValidationContext validationContext ) {
-            if (ReturnDate > RentalDate) {
+            if (RentalDate > ReturnDate) {
 
                 yield return new ValidationResult(
                     $"rental date is greater than 'Return date'",

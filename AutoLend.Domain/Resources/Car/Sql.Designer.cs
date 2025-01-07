@@ -68,7 +68,8 @@ namespace AutoLend.Data.Resources.Car {
         ///    [Year],
         ///    [LicensePlate],
         ///    [IsAvailable],
-        ///    [IsActive]
+        ///    [IsActive],
+        ///    [Cost]
         ///) 
         ///VALUES (
         ///    GETDATE(),
@@ -77,7 +78,8 @@ namespace AutoLend.Data.Resources.Car {
         ///    @Year,
         ///    @LicensePlate,
         ///    @IsAvailable,
-        ///    1
+        ///    1,
+        ///    @Cost
         ///)
         ///SELECT Scope_Identity().
         /// </summary>
@@ -97,12 +99,13 @@ namespace AutoLend.Data.Resources.Car {
         ///	[CA].[Id] = @carId 
         ///AND [IsActive] = 1;
         ///
-        ///UPDATE 
-        ///	[R]
+        ///UPDATE [R]
         ///SET
         ///	[R].[StatusId] = 2
+        ///FROM
+        ///	[dbo].[Rentals] AS [R]
         ///WHERE
-        ///	[CA].[Id] = @carId
+        ///	[R].[Id] = @carId
         ///AND [R].[IsActive] = 1.
         /// </summary>
         public static string Car_Delete {
@@ -142,7 +145,8 @@ namespace AutoLend.Data.Resources.Car {
         ///	[M].[ModelName], 
         ///	[CA].[Year], 
         ///	[CA].[LicensePlate], 
-        ///	[CA].[IsAvailable]
+        ///	[CA].[IsAvailable],
+        ///	[CA].[Cost]
         ///
         ///FROM [dbo].[Cars]				AS [CA] 
         ///	INNER JOIN [dbo].[Models]	AS [M]  ON [CA].[ModelId] = [M].[Id]
@@ -162,8 +166,9 @@ namespace AutoLend.Data.Resources.Car {
         
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT
-        ///	[CA].Id,
+        ///	[CA].[Id],
         ///	[CA].[LicensePlate],
+        ///	[CA].[IsAvailable],
         ///	[CA].[Cost]
         ///FROM
         ///	[dbo].[Cars] AS [CA]

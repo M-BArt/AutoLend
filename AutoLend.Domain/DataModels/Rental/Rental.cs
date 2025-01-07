@@ -7,6 +7,7 @@
         public required string LicensePlate { get; set; }
         public required string ModelName { get; set; }
         public required string BrandName { get; set; }
+        public required Guid CustomerId { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required string LicenseNumber { get; set; }

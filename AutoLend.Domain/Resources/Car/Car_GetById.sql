@@ -4,7 +4,8 @@
 	[M].[ModelName], 
 	[CA].[Year], 
 	[CA].[LicensePlate], 
-	[CA].[IsAvailable]
+	[CA].[IsAvailable],
+	[CA].[Cost]
 
 FROM [dbo].[Cars]				AS [CA] 
 	INNER JOIN [dbo].[Models]	AS [M]  ON [CA].[ModelId] = [M].[Id]

@@ -13,15 +13,16 @@
     [CU].[LastName], 
     [CU].[Email] 
 
-FROM [dbo].[Reservations] AS [R]
-INNER JOIN [dbo].[Status] AS [S] ON [R].StatusId = [S].[Id]
-INNER JOIN [dbo].[Cars] AS [CA] ON [R].CarId = [CA].[Id]
-INNER JOIN [dbo].[Customers] AS [CU] ON [R].CustomerId = [CU].[Id]
-INNER JOIN [dbo].[Models] AS [M] ON [CA].ModelId = [M].[Id]
-INNER JOIN [dbo].[Brands] AS [B] ON [M].BrandId = [B].[Id]
+FROM [dbo].[Reservations]       AS [R]
+INNER JOIN [dbo].[Status]       AS [S]  ON [R].StatusId = [S].[Id]
+INNER JOIN [dbo].[Cars]         AS [CA] ON [R].CarId = [CA].[Id]
+INNER JOIN [dbo].[Customers]    AS [CU] ON [R].CustomerId = [CU].[Id]
+INNER JOIN [dbo].[Models]       AS [M]  ON [CA].ModelId = [M].[Id]
+INNER JOIN [dbo].[Brands]       AS [B]  ON [M].BrandId = [B].[Id]
 
 WHERE 
-    [R].[IsActive] = 1
+    [R].[Id] = @reservationId
+AND [R].[IsActive] = 1
 AND [CA].[IsActive] = 1
 AND [M].[IsActive] = 1
 AND [B].[IsActive] = 1

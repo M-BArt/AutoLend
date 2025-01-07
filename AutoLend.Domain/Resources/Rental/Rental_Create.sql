@@ -55,3 +55,21 @@ VALUES
 	)
 
 SELECT Scope_Identity()
+
+UPDATE [CU]
+SET
+	[CU].[HasActiveRental] = 1
+FROM
+	[dbo].[Customers] AS [CU]
+WHERE
+	[CU].[Id] = @CustomerId
+AND [CU].[IsActive] = 1
+
+UPDATE [CA]
+SET
+	[CA].[IsAvailable] = 0
+FROM
+	[dbo].[Cars] AS [CA]
+WHERE
+	[CA].[Id] = @CarId
+AND [CA].[IsActive] = 1

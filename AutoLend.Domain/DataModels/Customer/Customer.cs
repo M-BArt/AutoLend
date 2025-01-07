@@ -1,6 +1,6 @@
 ﻿namespace AutoLend.Data.DataModels.Customer {
     public class Customer {
-        public required string Id { get; set; }
+        public required Guid Id { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? ModifyDate { get; set; }
         public string? FirstName { get; set; }

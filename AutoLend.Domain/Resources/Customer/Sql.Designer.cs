@@ -61,6 +61,22 @@ namespace AutoLend.Data.Resources.Customer {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE [CU]
+        ///SET
+        ///	[CU].[HasActiveRental] = 0
+        ///FROM 
+        ///	[dbo].[Customers] AS [CU]
+        ///WHERE
+        ///	[CU].[Id] = @customerId
+        ///AND [CU].[IsActive] = 1.
+        /// </summary>
+        internal static string Customer_ChangeActiveRental {
+            get {
+                return ResourceManager.GetString("Customer_ChangeActiveRental", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu INSERT INTO dbo.Customers 
         ///	(
         ///	[Id],
@@ -97,29 +113,34 @@ namespace AutoLend.Data.Resources.Customer {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE [dbo].[Customers]
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE [CU]
         ///SET 
-        ///	[IsActive] = 0, 
-        ///	[ModifyDate] = GETDATE()
+        ///	[CU].[IsActive] = 0, 
+        ///	[CU].[ModifyDate] = GETDATE()
+        ///FROM 
+        ///	[dbo].[Customers] AS [CU]
         ///WHERE 
-        ///	[Id] = @customerId 
-        ///AND [IsActive] = 1;
+        ///	[CU].[Id] = @customerId 
+        ///AND [CU].[IsActive] = 1;
         ///
-        ///UPDATE [dbo].[Reservations]
+        ///UPDATE [R]
         ///SET 
-        ///	[ModifyDate] = GETDATE(),
-        ///	[StatusId] = 2,
-        ///	[IsActive] = 0
+        ///	[R].[ModifyDate] = GETDATE(),
+        ///	[R].[StatusId] = 2
+        ///FROM
+        ///	[dbo].[Reservations] AS [R]
         ///WHERE 
-        ///	[dbo].[Reservation].[CustomerId] = @customerId
-        ///AND [dbo].[Reservation].[IsActive] = 1;
+        ///	[R].[CustomerId] = @customerId
+        ///AND [R].[IsActive] = 1;
         ///
-        ///UPDATE [dbo].[Cars]
+        ///UPDATE [CA]
         ///SET
-        ///	[ModifyDate] = GETDATE(),
-        ///	[IsAvailable] = 1
+        ///	[CA].[ModifyDate] = GETDATE(),
+        ///	[CA].[IsAvailable] = 1
+        ///FROM
+        ///	[dbo].[Cars] AS [CA]
         ///WHERE
-        ///	[Car].[Id] = (SELECT [Car].[Id] FROM [dbo].[Rentals] WHERE [CustomerId] = @customerId AND [IsActive]  [obcięto pozostałą część ciągu]&quot;;.
+        ///	[CA].[Id] = (SELECT [CA].[Id] FROM [dbo].[Rentals]  [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Customer_Delete {
             get {
@@ -163,8 +184,7 @@ namespace AutoLend.Data.Resources.Customer {
         ///    [CU].[Phone],
         ///    [CU].[Address],
         ///    [CU].[DateOfBirth],
-        ///    [CU].[HasActiveRental],
-        ///    [CU].[Cost]
+        ///    [CU].[HasActiveRental]
         ///FROM 
         ///	[dbo].[Customers] AS [CU]
         ///WHERE 
@@ -199,26 +219,28 @@ namespace AutoLend.Data.Resources.Customer {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF @Field = &apos;Email&apos;
-        ///    BEGIN
-        ///        SELECT CASE
-        ///            WHEN EXISTS (
-        ///                SELECT 1
-        ///                FROM [dbo].[Customers]
-        ///                WHERE [Email] = @Value
-        ///                AND (@ExcludeCustomerId IS NULL OR Id != @ExcludeCustomerId)
-        ///            )
-        ///            THEN 1
-        ///            ELSE 0
-        ///        END;
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu IF @field= &apos;Email&apos;
+        ///BEGIN
+        ///    SELECT CASE
+        ///        WHEN EXISTS (
+        ///            SELECT 1
+        ///            FROM [dbo].[Customers]
+        ///            WHERE [Email] = @value
+        ///            AND (@excludeCustomerId IS NULL OR Id != @ExcludeCustomerId)
+        ///        )
+        ///        THEN 1
+        ///        ELSE 0
         ///    END
-        ///IF @Field = &apos;LicenseNumber&apos;
-        ///    BEGIN
-        ///        SELECT CASE
-        ///            WHEN EXISTS (
-        ///                SELECT 1
-        ///                FROM [dbo].[Customers]
-        ///                 [obcięto pozostałą część ciągu]&quot;;.
+        ///END
+        ///
+        ///IF @field = &apos;LicenseNumber&apos;
+        ///BEGIN
+        ///    SELECT CASE
+        ///        WHEN EXISTS (
+        ///            SELECT 1
+        ///            FROM [dbo].[Customers]
+        ///            WHERE [LicenseNumber] = @value
+        ///            AND (@excludeCustomerId IS N [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Customer_IsCustomerFieldUnique {
             get {
@@ -227,13 +249,13 @@ namespace AutoLend.Data.Resources.Customer {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE CU
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu UPDATE [CU]
         ///	SET 
-        ///		[CU].[FirstName]		= COALESCE(NULLIF(@FirstName, &apos;&apos;), C.FirstName),
-        ///		[CU].[LastName]			= COALESCE(NULLIF(@LastName, &apos;&apos;), C.LastName),
-        ///		[CU].[LicenseNumber]	= COALESCE(NULLIF(@LicenseNumber, &apos;&apos;), C.LicenseNumber),
-        ///		[CU].[Phone]			= COALESCE(NULLIF(@Phone, &apos;&apos;), C.Phone),
-        ///		[CU].[Address]			= COALESCE(NULLIF(@Address, &apos;&apos;), C.Address),
+        ///		[CU].[FirstName]		= COALESCE(NULLIF(@FirstName, &apos;&apos;), [CU].[FirstName]),
+        ///		[CU].[LastName]			= COALESCE(NULLIF(@LastName, &apos;&apos;), [CU].[LastName]),
+        ///		[CU].[LicenseNumber]	= COALESCE(NULLIF(@LicenseNumber, &apos;&apos;), [CU].[LicenseNumber]),
+        ///		[CU].[Phone]			= COALESCE(NULLIF(@Phone, &apos;&apos;), [CU].[Phone]),
+        ///		[CU].[Address]			= COALESCE(NULLIF(@Address, &apos;&apos;), [CU].[Address]),
         ///		[CU].[ModifyDate]		= GETDATE()
         ///	FROM 
         ///		[dbo].[Customers] AS [CU]
@@ -241,7 +263,7 @@ namespace AutoLend.Data.Resources.Customer {
         ///		[CU].[Id] = @Id
         ///	AND [IsActive] = 1;
         ///
-        ///IF @DateOfBirth IS NOT NULL        /// [obcięto pozostałą część ciągu]&quot;;.
+        ///I [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         internal static string Customer_Update {
             get {

@@ -22,7 +22,8 @@ namespace AutoLend.Data.Repositories.Car.Car {
                     car.ModelId,
                     car.Year,
                     car.LicensePlate,
-                    car.IsAvailable
+                    car.IsAvailable,
+                    car.Cost
                 };
 
                 return await connection.ExecuteAsync(Sql.Car_Create, parameters);

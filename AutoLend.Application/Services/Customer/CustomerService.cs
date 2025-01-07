@@ -2,22 +2,27 @@
 using AutoLend.Core.Esceptions;
 using AutoLend.Data.CoreModels.Customer;
 using AutoLend.Data.Repositories.Customer;
+using AutoLend.Data.Repositories.Rental;
 
 namespace AutoLend.Core.Services.Customer {
     internal class CustomerService : ICustomerService {
 
         private readonly ICustomerRepository _customerRepository;
-        public CustomerService( ICustomerRepository customerRepository ) {
+        private readonly IRentalRepository _rentalRepository;
+        public CustomerService( ICustomerRepository customerRepository, IRentalRepository rentalRepository ) {
             _customerRepository = customerRepository;
+            _rentalRepository = rentalRepository;
         }
         public async Task<IEnumerable<Data.DataModels.Customer.Customer?>> GetAllCustomers() {
             return await _customerRepository.GetAllAsync();
         }
         public async Task DeleteCustomer( Guid customerId ) {
 
+            if ((await _rentalRepository.GetAllAsync()).Where(x => x.CustomerId == customerId && x.StatusName == "Confirmed").Any())
+                throw new BusinessException("The customer cannot be deleted because they have an active rental.");
+            
             if (await _customerRepository.GetByIdAsync(customerId) is null)
                 throw new BusinessException("Customer not found or is not active.");
-
 
             await _customerRepository.DeleteAsync(customerId);
         }

@@ -3,10 +3,10 @@
 		[RE].[StatusId]		= COALESCE(	NULLIF(@StatusId, ''),		[RE].[StatusId]),
 		[RE].[RentalDate]	= COALESCE(	NULLIF(@RentalDate, ''),	[RE].[RentalDate]),
 		[RE].[ReturnDate]	= COALESCE(	NULLIF(@ReturnDate, ''),	[RE].[ReturnDate]),
-		[RE].[Cost]			= COALESCE(	NULLIF(@Cost, ''),			[RE].[Cost])
+		[RE].[TotalCost]	= @TotalCost
 	FROM 
 		[dbo].[Rentals] AS [RE]
 	WHERE 
-		[RE].[Id] = @Id
+		[RE].[Id] = @RentalId
 	AND [RE].[IsActive] = 1;
 

@@ -1,32 +1,40 @@
-﻿UPDATE [dbo].[Customers]
+﻿UPDATE [CU]
 SET 
-	[IsActive] = 0, 
-	[ModifyDate] = GETDATE()
+	[CU].[IsActive] = 0, 
+	[CU].[ModifyDate] = GETDATE()
+FROM 
+	[dbo].[Customers] AS [CU]
 WHERE 
-	[Id] = @customerId 
-AND [IsActive] = 1;
+	[CU].[Id] = @customerId 
+AND [CU].[IsActive] = 1;
 
-UPDATE [dbo].[Reservations]
+UPDATE [R]
 SET 
-	[ModifyDate] = GETDATE(),
-	[StatusId] = 2,
-	[IsActive] = 0
+	[R].[ModifyDate] = GETDATE(),
+	[R].[StatusId] = 2
+FROM
+	[dbo].[Reservations] AS [R]
 WHERE 
-	[dbo].[Reservation].[CustomerId] = @customerId
-AND [dbo].[Reservation].[IsActive] = 1;
+	[R].[CustomerId] = @customerId
+AND [R].[IsActive] = 1;
 
-UPDATE [dbo].[Cars]
+UPDATE [CA]
 SET
-	[ModifyDate] = GETDATE(),
-	[IsAvailable] = 1
+	[CA].[ModifyDate] = GETDATE(),
+	[CA].[IsAvailable] = 1
+FROM
+	[dbo].[Cars] AS [CA]
 WHERE
-	[Car].[Id] = (SELECT [Car].[Id] FROM [dbo].[Rentals] WHERE [CustomerId] = @customerId AND [IsActive] = 1)
+	[CA].[Id] = (SELECT [CA].[Id] FROM [dbo].[Rentals] WHERE [CustomerId] = @customerId AND [IsActive] = 1 AND [StatusId] = 1)
+AND [CA].[IsActive] = 1
 
-UPDATE [dbo].[Rentals]
+UPDATE [RE]
 SET
-	[ModifyDate] = GETDATE(),
-	[IsActive] = 0
+	[RE].[ModifyDate] = GETDATE(),
+	[RE].[StatusId] = 2
+FROM
+	[dbo].[Rentals] AS [RE]
 WHERE 
-	[dbo].[Rentals].[CustomerId] = @customerId
-AND ([StatusId] = 3 
-	OR [StatusId] = 2)
+	[RE].[CustomerId] = @customerId
+AND [RE].[StatusId] = 1 
+AND [RE].[IsActive] = 1

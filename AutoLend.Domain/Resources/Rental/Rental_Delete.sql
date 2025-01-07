@@ -1,9 +1,11 @@
-﻿UPDATE 
-	[dbo].[Rentals]
+﻿UPDATE [RE]
+
 SET 
 	[IsActive] = 0 
+FROM
+	[dbo].[Rentals] AS [RE]
 WHERE 
-	[Id] = @rentalId 
+	[RE].[Id] = @rentalId 
 AND [IsActive] = 1
 AND [StatusId] != 1;
 
@@ -14,5 +16,6 @@ SET
 FROM 
 	[dbo].[Customers] AS [CU]
 WHERE 
-	[CU].[Id] = @customerId
+	[CU].[Id] = (SELECT [RE].[CustomerId] FROM [dbo.Rentals] AS [RE] WHERE [RE].Id = @rentalId)
 AND [CU].[IsActive] = 1
+
