@@ -73,10 +73,13 @@ namespace AutoLend.Data.Repositories.Car.Car {
                 var parameters = new {
                     car.text,
                     car.ModelIdsJSON,
-                    car.BrandId,
                     car.YearFrom,
                     car.YearTo,
                     car.IsAvailable,
+                    car.Page,
+                    car.PageSize,
+                    car.OrderDir,
+                    car.OrderBy,
                 };
 
                 return await connection.QueryAsync<CarSearch>(Sql.Car_Search, parameters);

@@ -3,8 +3,8 @@
         public string? text { get; set; }
         public string? ModelIdsJSON { get; set; }
         public int? BrandId { get; set; }
-        public DateTime? YearFrom { get; set; }
-        public DateTime? YearTo { get; set; }
+        public int? YearFrom { get; set; }
+        public int? YearTo { get; set; }
         public bool? IsAvailable { get; set; }
         public int? Page { get; set; }
         public int? PageSize { get; set; }

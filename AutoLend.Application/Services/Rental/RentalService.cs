@@ -51,7 +51,7 @@ namespace AutoLend.Core.Services.Rental {
             await _rentalRepository.DeleteAsync(rentalId);
         }
         public async Task<Data.DataModels.Rental.Rental?> GetRentalById( int rentalId ) {
-            return await _rentalRepository.GetByIdAsync(rentalId);
+            return await _rentalRepository.GetByIdAsync(rentalId) ?? throw new BusinessException("Rental not found.");
         }
         public async Task<IEnumerable<Data.DataModels.Rental.Rental?>> GetAllRentals() {
             return await _rentalRepository.GetAllAsync();

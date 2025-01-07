@@ -3,8 +3,8 @@ using AutoLend.Core.Esceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoLend.API.Controllers.CarController {
-
     public partial class CarController {
+
         /// <summary>
         /// Endpoint to creation of a new car record.
         /// </summary>

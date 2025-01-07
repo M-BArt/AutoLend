@@ -1,13 +1,13 @@
-﻿SET @Page = ISNULL(@Page, 1)
-SET @PageSize = ISNULL(@PageSize, 10)
-SET @OrderDir = ISNULL(@OrderDir, 1)
-SET @OrderBy = ISNULL(@OrderBy, 'ModelName') DECLARE @OrderDesc VARCHAR(10) = 
-    CASE
-        WHEN @OrderDir < 0  THEN 'DESC'
-        WHEN @OrderDir >= 0 THEN 'ASC'
-    END 
-DECLARE @SortExpression VARCHAR(300) = CONCAT(@OrderBy, ' ', @OrderDesc);
+﻿SET @Page       = ISNULL(@Page, 1)
+SET @PageSize   = ISNULL(@PageSize, 10)
+SET @OrderBy    = ISNULL(@OrderBy, 'ModelName') 
 
+DECLARE @OrderDesc VARCHAR(10) = 
+    CASE
+        WHEN @OrderDir IS NULL THEN 'ASC'
+        WHEN @OrderDir <= 0 THEN 'DESC'
+        ELSE 'ASC'
+    END;
 
 DECLARE @ModelData TABLE (
     ModelId INT
@@ -15,7 +15,7 @@ DECLARE @ModelData TABLE (
 
 INSERT INTO @ModelData (ModelId)
 SELECT ModelId
-FROM OPENJSON(@json)
+FROM OPENJSON(@ModelIdsJSON)
 WITH (
     ModelId INT '$.ModelId'
 );
@@ -30,11 +30,10 @@ FROM [dbo].[Cars]               AS [CA]
     INNER JOIN [dbo].[Models]   AS [M] ON [CA].[ModelId] = [M].[Id]
     INNER JOIN [dbo].[Brands]   AS [B] ON [M].[BrandId] = [B].[Id]
 WHERE 
-        [CA].IsActive = 1 
-    AND [M].IsActive = 1
-    AND [B].IsActive = 1
-    AND (@text IS NULL OR C.ModelName + ' ' + B.BrandName LIKE '%' + @text + '%')
-    AND (EXISTS (SELECT 1 FROM @ModelData) AND [M].[Id] IN (SELECT [ModelId] FROM @ModelData))
+        [CA].[IsActive] = 1 
+    AND [M].[IsActive] = 1
+    AND [B].[IsActive] = 1
+    AND (@text IS NULL OR (M.ModelName LIKE '%' + @text + '%'))
     AND 
     (
            (@YearFrom   IS NULL       AND @YearTo IS NULL)
@@ -45,9 +44,10 @@ WHERE
     AND (@IsAvailable IS NULL OR [CA].[IsAvailable] = @IsAvailable)
 
 ORDER BY
-    CASE WHEN @SortExpression = 'ModelName ASC'     THEN [M].[ModelName]    END ASC,
-    CASE WHEN @SortExpression = 'ModelName DESC'    THEN [M].[ModelName]    END DESC,
-    CASE WHEN @SortExpression = 'BrandName ASC'     THEN [B].[BrandName]    END ASC,
-    CASE WHEN @SortExpression = 'BrandName DESC'    THEN [B].[BrandName]    END DESC
- 
+    CASE WHEN @OrderBy = 'ModelName ASC'    AND @OrderDesc = 'ASC'      THEN [M].[ModelName]    END ASC,
+    CASE WHEN @OrderBy = 'ModelName DESC'   AND @OrderDesc = 'DESC'     THEN [M].[ModelName]    END DESC,
+    CASE WHEN @OrderBy = 'BrandName ASC'    AND @OrderDesc = 'ASC'      THEN [B].[BrandName]    END ASC,
+    CASE WHEN @OrderBy = 'BrandName DESC'   AND @OrderDesc = 'DESC'     THEN [B].[BrandName]    END DESC,
+    CASE WHEN @OrderBy = 'Year'             AND @OrderDesc = 'ASC'      THEN [CA].[Year]        END ASC,
+    CASE WHEN @OrderBy = 'Year'             AND @OrderDesc = 'DESC'     THEN [CA].[Year]        END DESC
 OFFSET (@Page -1) * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY

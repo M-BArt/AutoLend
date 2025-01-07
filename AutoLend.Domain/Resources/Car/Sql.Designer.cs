@@ -205,16 +205,16 @@ namespace AutoLend.Data.Resources.Car {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SET @Page = ISNULL(@Page, 1)
-        ///SET @PageSize = ISNULL(@PageSize, 10)
-        ///SET @OrderDir = ISNULL(@OrderDir, 1)
-        ///SET @OrderBy = ISNULL(@OrderBy, &apos;ModelName&apos;) DECLARE @OrderDesc VARCHAR(10) = 
-        ///    CASE
-        ///        WHEN @OrderDir &lt; 0  THEN &apos;DESC&apos;
-        ///        WHEN @OrderDir &gt;= 0 THEN &apos;ASC&apos;
-        ///    END 
-        ///DECLARE @SortExpression VARCHAR(300) = CONCAT(@OrderBy, &apos; &apos;, @OrderDesc);
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SET @Page       = ISNULL(@Page, 1)
+        ///SET @PageSize   = ISNULL(@PageSize, 10)
+        ///SET @OrderBy    = ISNULL(@OrderBy, &apos;ModelName&apos;) 
         ///
+        ///DECLARE @OrderDesc VARCHAR(10) = 
+        ///    CASE
+        ///        WHEN @OrderDir IS NULL THEN &apos;ASC&apos;
+        ///        WHEN @OrderDir &lt;= 0 THEN &apos;DESC&apos;
+        ///        ELSE &apos;ASC&apos;
+        ///    END;
         ///
         ///DECLARE @ModelData TABLE (
         ///    ModelId INT
@@ -222,9 +222,14 @@ namespace AutoLend.Data.Resources.Car {
         ///
         ///INSERT INTO @ModelData (ModelId)
         ///SELECT ModelId
-        ///FROM OPENJSON(@json)
+        ///FROM OPENJSON(@ModelIdsJSON)
         ///WITH (
-        ///    ModelId IN [obcięto pozostałą część ciągu]&quot;;.
+        ///    ModelId INT &apos;$.ModelId&apos;
+        ///);
+        ///
+        ///SELECT 
+        ///    [M].[ModelName], 
+        ///    [B].[BrandNa [obcięto pozostałą część ciągu]&quot;;.
         /// </summary>
         public static string Car_Search {
             get {

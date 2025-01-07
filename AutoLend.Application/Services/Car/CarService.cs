@@ -65,14 +65,14 @@ namespace AutoLend.Core.Services.Car {
 
             CarSearchDTO CarDto = new() {
                 ModelIdsJSON = modelIdsJson,
-                BrandId = car.BrandId,
                 YearFrom = car.YearFrom,
                 YearTo = car.YearTo,
                 IsAvailable = car.IsAvailable,
                 Page = car.Page,
                 PageSize = car.PageSize,
                 OrderBy = car.OrderBy,
-                OrderDir = car.OrderDir
+                OrderDir = car.OrderDir,
+                text = car.text,
             };
 
             return await _carRepository.SearchAsync(CarDto);
